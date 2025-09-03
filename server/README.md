@@ -8,7 +8,7 @@ Steps (beginner-friendly)
 1) Install Node.js (LTS) from nodejs.org. Verify with `node -v`.
 2) Open a terminal in the project folder, then:
    - `cd server`
-   - Copy env file: PowerShell -> `Copy-Item .env.example .env`
+   - Copy env file: PowerShell → `Copy-Item .env.example .env`
    - Open it: `notepad .env`
      - Set `ADMIN_TOKEN=ChooseAStrongSecret`
      - (Optional) Set email SMTP settings if you want notifications.
@@ -19,7 +19,7 @@ Steps (beginner-friendly)
    - Services + ordering: services.html (Order Now opens a form)
    - Payment: payment.html (your UPI shown)
    - Admin: admin.html (enter your ADMIN_TOKEN, then Refresh)
-   - Chat: floating 💬 button on every page. Messages are saved and visible in Admin.
+   - Chat: floating chat bubble button on every page. Messages are saved and visible in Admin.
    - AI Chat (optional): Set OPENAI_API_KEY in server/.env to enable AI responses. Falls back to smart rules if not set.
 
 Environment
@@ -51,3 +51,4 @@ AI Chat (public)
 Notes
 - Orders are stored in `server/data/orders.json`.
 - For production, consider a database and hardened auth.
+

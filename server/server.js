@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import express from 'express';
 import cors from 'cors';
 import nodemailer from 'nodemailer';
@@ -14,13 +15,28 @@ const AI_MODEL = process.env.AI_MODEL || 'gpt-4o-mini';
 
 // Config
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '').split(',').filter(Boolean);
-const DATA_DIR = path.join(process.cwd(), 'server', 'data');
-const ROOT_DIR = path.join(process.cwd(), '..');
+// Resolve paths relative to this file so `npm start` from server/ or other CWDs work consistently
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DATA_DIR = path.join(__dirname, 'data');
+const ROOT_DIR = path.resolve(__dirname, '..');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 const MESSAGES_FILE = path.join(DATA_DIR, 'messages.json');
 
+// Migrate legacy data directory (older versions wrote to server/server/data)
+const LEGACY_DATA_DIR = path.join(__dirname, 'server', 'data');
+const LEGACY_ORDERS_FILE = path.join(LEGACY_DATA_DIR, 'orders.json');
+const LEGACY_MESSAGES_FILE = path.join(LEGACY_DATA_DIR, 'messages.json');
+
 // Ensure data dir and file exist
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+// If legacy files exist and new ones do not, migrate them
+if (fs.existsSync(LEGACY_ORDERS_FILE) && !fs.existsSync(ORDERS_FILE)) {
+  fs.copyFileSync(LEGACY_ORDERS_FILE, ORDERS_FILE);
+}
+if (fs.existsSync(LEGACY_MESSAGES_FILE) && !fs.existsSync(MESSAGES_FILE)) {
+  fs.copyFileSync(LEGACY_MESSAGES_FILE, MESSAGES_FILE);
+}
 if (!fs.existsSync(ORDERS_FILE)) fs.writeFileSync(ORDERS_FILE, JSON.stringify([]));
 if (!fs.existsSync(MESSAGES_FILE)) fs.writeFileSync(MESSAGES_FILE, JSON.stringify([]));
 

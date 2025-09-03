@@ -1,3 +1,6 @@
+// Configure your backend base URL here (leave empty for same-origin)
+const BACKEND_BASE_URL = '';
+
 // Tabs switching
 const tabs = document.querySelectorAll('.tab');
 const panels = document.querySelectorAll('.tab-panel');
@@ -182,13 +185,13 @@ if (tipsToggle && tipsContent) {
   const launcher = document.createElement('button');
   launcher.className = 'chat-launcher';
   launcher.title = 'Chat with Azzi';
-  launcher.innerHTML = '💬';
+  launcher.textContent = '💬';
   const win = document.createElement('div');
   win.className = 'chat-window';
   win.innerHTML = `
     <div class="chat-header">
       <h3>Chat with Azzi</h3>
-      <button class="btn btn-outline" data-close-chat>×</button>
+      <button class="btn btn-outline" data-close-chat title="Close">×</button>
     </div>
     <div class="chat-body" id="chatBody">
       <div class="chat-msg bot">Hi! Tell me your name, email and what you need. I reply fast.</div>
@@ -239,7 +242,6 @@ if (tipsToggle && tipsContent) {
       aiHistory.push({ role: 'assistant', content: botReply });
 
       // Also log as lead in background
-      // Try to detect name/email if included in text; otherwise you can add inputs later
       const emailMatch = text.match(/[\w.-]+@[\w.-]+\.[A-Za-z]{2,}/);
       const nameMatch = text.split(/[\.!?]/)[0].split(' ').slice(0,2).join(' ');
       await fetch(`${BACKEND_BASE_URL}/api/chat`, {
@@ -247,12 +249,10 @@ if (tipsToggle && tipsContent) {
         body: JSON.stringify({ name: nameMatch, email: emailMatch?.[0] || '', message: text, page: location.pathname })
       });
     } catch (err) {
-      pushBot('I’m here, but something went wrong sending your message. You can WhatsApp me: +91 99066 17652');
+      pushBot("I'm here, but something went wrong sending your message. You can WhatsApp me: +91 99066 17652");
     }
   });
 })();
-// Backend base URL (set to your server origin if different)
-const BACKEND_BASE_URL = ''; // same-origin when served by backend
 
 // Order modal logic (Services page)
 const orderModal = document.getElementById('orderModal');
@@ -303,3 +303,4 @@ if (orderForm) {
     }
   });
 }
+
