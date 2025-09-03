@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Payment — Studio by Azzi</title>
+  <meta name="description" content="Pay securely for Studio by Azzi services via UPI, bank transfer, or payment link." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Studio by Azzi</a>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="services.html#pricing">Pricing</a>
+        <a href="payment.html">Payment</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <div class="header-cta">
+        <a class="btn btn-outline" href="https://wa.me/919906617652" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn btn-primary" href="mailto:studiobyazzi@gmail.com?subject=Project%20Inquiry&body=Hi%20Azzi,%20I%27m%20interested%20in%20your%20services.%20Here%27s%20my%20project%20summary%3A%20">Get a Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title reveal">Payment</h1>
+      <p class="section-lead reveal">Choose your preferred payment option. For custom links or invoices, contact me directly.</p>
+
+      <div class="payment-box reveal">
+        <div class="payment-methods">
+          <div class="method">
+            <h3>UPI</h3>
+            <p>UPI ID: <code id="upiId">9906617652@omni</code></p>
+            <button class="btn btn-outline" id="copyUpi">Copy UPI ID</button>
+          </div>
+          <div class="method">
+            <h3>Bank Transfer</h3>
+            <p>Request bank details securely via email.</p>
+            <a class="btn btn-outline" href="mailto:studiobyazzi@gmail.com?subject=Request%20Bank%20Details&body=Hi%20Azzi,%20please%20share%20bank%20details%20for%20payment.">Request Details</a>
+          </div>
+          <div class="method">
+            <h3>Payment Link</h3>
+            <p>Prefer a secure payment link?</p>
+            <a class="btn btn-primary" href="mailto:studiobyazzi@gmail.com?subject=Request%20Payment%20Link&body=Hi%20Azzi,%20please%20send%20a%20payment%20link%20for%20Rs%20_____.">Request Payment Link</a>
+          </div>
+        </div>
+        <p class="note">50% advance to start. Remaining on delivery/approval.</p>
+      </div>
+
+      <div class="quick-pay card reveal" style="margin-top:16px">
+        <h2>Quick Pay via UPI</h2>
+        <p class="section-lead">Create a one‑click UPI link with your amount and note.</p>
+        <div class="qp-grid">
+          <label> Amount (₹)
+            <input type="number" id="qpAmount" min="1" step="1" placeholder="e.g., 2500" />
+          </label>
+          <label> Note (optional)
+            <input type="text" id="qpNote" maxlength="40" placeholder="e.g., Website advance" />
+          </label>
+          <div class="qp-actions">
+            <a class="btn btn-primary" id="openUpi" href="#" rel="nofollow">Open UPI App</a>
+            <button class="btn btn-outline" id="copyUpiLink" type="button">Copy Payment Link</button>
+          </div>
+        </div>
+        <p class="note" id="qpStatus" role="status" style="display:none"></p>
+      </div>
+
+      <div class="card reveal" style="margin-top:12px">
+        <button class="btn btn-ghost" id="tipsToggle" type="button">Show Payment Tips</button>
+        <div id="tipsContent" style="display:none; margin-top:8px; color: var(--muted);">
+          <p>UPI link works on mobile with UPI apps installed (GPay, PhonePe, Paytm). On desktop, copy the link and paste into your phone.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:16px" class="reveal">
+        <a class="btn btn-ghost" href="services.html">Back to Services</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Studio by Azzi. All rights reserved.</p>
+      <div class="socials">
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

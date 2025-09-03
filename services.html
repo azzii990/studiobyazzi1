@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Services & Pricing — Studio by Azzi</title>
+  <meta name="description" content="Front‑end and full‑stack web development services, logo design, branding, banners, and clear pricing." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Studio by Azzi</a>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="services.html#pricing">Pricing</a>
+        <a href="payment.html">Payment</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <div class="header-cta">
+        <a class="btn btn-outline" href="https://wa.me/919906617652" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn btn-primary" href="mailto:studiobyazzi@gmail.com?subject=Project%20Inquiry&body=Hi%20Azzi,%20I%27m%20interested%20in%20your%20services.%20Here%27s%20my%20project%20summary%3A%20">Get a Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title reveal">Services</h1>
+      <p class="section-lead reveal">Choose between Web Development (Front‑end or Full‑stack) and Graphic Design (logos, panels/banners, brand kits). Clear deliverables and outcomes.</p>
+
+      <div class="tabs reveal">
+        <button class="tab active" data-tab="web">Web Development</button>
+        <button class="tab" data-tab="design">Graphic Design</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-web">
+        <div class="cards">
+          <article class="card reveal">
+            <h3>Front‑End Website</h3>
+            <p>Beautiful, responsive landing or multi‑page sites. Optimized for speed, SEO and conversions.</p>
+            <ul class="features">
+              <li>Modern UI + responsive layouts</li>
+              <li>On‑page SEO + analytics</li>
+              <li>Performance + accessibility</li>
+            </ul>
+            <div class="card-footer">
+              <span class="price">Starting ₹12,000</span>
+              <button class="btn btn-primary order-btn" data-service="frontend" data-service-title="Front‑End Website">Order Now</button>
+            </div>
+          </article>
+          <article class="card reveal">
+            <h3>Full‑Stack Website</h3>
+            <p>Custom back‑end, dashboards, auth, and integrations. Scalable and secure.</p>
+            <ul class="features">
+              <li>API + database design</li>
+              <li>Admin panels + workflows</li>
+              <li>Deploy + CI/CD guidance</li>
+            </ul>
+            <div class="card-footer">
+              <span class="price">Starting ₹45,000</span>
+              <button class="btn btn-primary order-btn" data-service="fullstack" data-service-title="Full‑Stack Website">Order Now</button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-design">
+        <div class="cards">
+          <article class="card reveal">
+            <h3>Logo Design</h3>
+            <p>Distinctive logos with brand guidelines and export files for print and web.</p>
+            <ul class="features">
+              <li>3 concepts + 3 revisions</li>
+              <li>Vector + PNG + SVG files</li>
+              <li>Mini brand guide</li>
+            </ul>
+            <div class="card-footer">
+              <span class="price">Starting ₹4,000</span>
+              <button class="btn btn-primary order-btn" data-service="logo" data-service-title="Logo Design">Order Now</button>
+            </div>
+          </article>
+          <article class="card reveal">
+            <h3>Business Panels & Banners</h3>
+            <p>High‑impact signage, storefront panels, flex banners, and promotional creatives.</p>
+            <ul class="features">
+              <li>Print‑ready CMYK files</li>
+              <li>Custom sizes + mockups</li>
+              <li>Fast turnarounds</li>
+            </ul>
+            <div class="card-footer">
+              <span class="price">Starting ₹2,500</span>
+              <button class="btn btn-primary order-btn" data-service="panels" data-service-title="Business Panels & Banners">Order Now</button>
+            </div>
+          </article>
+          <article class="card reveal">
+            <h3>Brand Kit</h3>
+            <p>Complete brand essentials: color palette, typography, logo usage, and templates.</p>
+            <ul class="features">
+              <li>Brand guide PDF</li>
+              <li>Social + print templates</li>
+              <li>Asset export pack</li>
+            </ul>
+            <div class="card-footer">
+              <span class="price">Starting ₹8,500</span>
+              <button class="btn btn-primary order-btn" data-service="brandkit" data-service-title="Brand Kit">Order Now</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Service List & Pricing</h2>
+      <div class="pricing">
+        <div class="pricing-column">
+          <h3>Web</h3>
+          <ul>
+            <li><span>Landing page (front‑end)</span><b>₹12,000+</b></li>
+            <li><span>Multi‑page site (front‑end)</span><b>₹22,000+</b></li>
+            <li><span>Full‑stack MVP</span><b>₹45,000+</b></li>
+            <li><span>E‑commerce integration</span><b>₹30,000+</b></li>
+            <li><span>Performance/SEO audit</span><b>₹5,000</b></li>
+          </ul>
+        </div>
+        <div class="pricing-column">
+          <h3>Design</h3>
+          <ul>
+            <li><span>Logo design (3 concepts)</span><b>₹4,000</b></li>
+            <li><span>Business panels/banners</span><b>₹2,500+</b></li>
+            <li><span>Brand kit</span><b>₹8,500</b></li>
+            <li><span>Social media pack</span><b>₹3,500</b></li>
+            <li><span>Print collateral</span><b>₹2,000+</b></li>
+          </ul>
+        </div>
+      </div>
+      <p class="note">All prices are starting points. Final quotes depend on scope, features, and timeline.</p>
+      <div style="margin-top:16px">
+        <a class="btn btn-primary" href="payment.html">Proceed to Payment</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Studio by Azzi. All rights reserved.</p>
+      <div class="socials">
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Order Modal -->
+  <div class="modal" id="orderModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+      <button class="modal__close" title="Close" data-close-modal>&times;</button>
+      <h2 id="orderTitle">Place Your Order</h2>
+      <p class="section-lead" id="orderServiceLabel">Service: <span id="orderServiceName">—</span></p>
+      <form id="orderForm" class="order-form">
+        <input type="hidden" name="serviceKey" id="orderServiceKey" />
+        <label> Name <input type="text" name="name" required /></label>
+        <label> Email <input type="email" name="email" required /></label>
+        <label> Phone <input type="tel" name="phone" placeholder="Optional" /></label>
+        <label> Budget (₹) <input type="number" name="budget" min="0" step="100" placeholder="Optional" /></label>
+        <label> Details <textarea name="details" rows="4" placeholder="Describe what you need"></textarea></label>
+        <button type="submit" class="btn btn-primary" id="orderSubmit">Submit Order</button>
+        <p class="note" id="orderStatus" role="status" style="display:none"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

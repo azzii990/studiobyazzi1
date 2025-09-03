@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin — Studio by Azzi</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Studio by Azzi</a>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="payment.html">Payment</a>
+      </nav>
+      <div class="header-cta">
+        <a class="btn btn-outline" href="https://wa.me/919906617652" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">Admin — Orders</h1>
+      <p class="section-lead">Enter your admin token to view and manage orders.</p>
+
+      <div class="card" style="margin:12px 0;">
+        <form id="adminAuth" class="order-form" style="grid-template-columns: 1fr auto; align-items: end;">
+          <label>
+            Admin Token
+            <input type="password" id="adminToken" placeholder="Enter ADMIN_TOKEN" />
+          </label>
+          <button class="btn btn-primary" type="submit">Save Token</button>
+        </form>
+        <p class="note">Set ADMIN_TOKEN in <code>server/.env</code> and enter it here. Stored locally in your browser.</p>
+      </div>
+
+      <div class="card" style="margin:12px 0;">
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <button class="btn btn-outline" id="refreshOrders">Refresh</button>
+          <label style="flex:1;">
+            Search
+            <input type="text" id="search" placeholder="Filter by name, email, service, status" />
+          </label>
+        </div>
+        <div style="overflow:auto; margin-top:10px;">
+          <table class="table" id="ordersTable" style="width:100%; min-width:900px;">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Created</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Service</th>
+                <th>Budget</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="margin:12px 0;">
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <button class="btn btn-outline" id="refreshChats">Refresh Chats</button>
+          <label style="flex:1;">
+            Search Chats
+            <input type="text" id="searchChats" placeholder="Filter by name, email, status or text" />
+          </label>
+        </div>
+        <div style="overflow:auto; margin-top:10px;">
+          <table class="table" id="chatTable" style="width:100%; min-width:900px;">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Created</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Page</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="admin.js"></script>
+</body>
+</html>

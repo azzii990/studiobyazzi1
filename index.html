@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Studio by Azzi - Web Development & Graphic Design</title>
+  <meta name="description" content="Premium web development and graphic design studio. Front-end and full-stack websites, logo design, branding, banners, and marketing creatives." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Studio by Azzi</a>
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="services.html#pricing">Pricing</a>
+        <a href="payment.html">Payment</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <div class="header-cta">
+        <a class="btn btn-outline" href="https://wa.me/919906617652" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn btn-primary" href="mailto:studiobyazzi@gmail.com?subject=Project%20Inquiry&body=Hi%20Azzi,%20I%20am%20interested%20in%20your%20services.%20Here%20is%20my%20project%20summary:%20">Get a Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1>Google-grade quality for ambitious brands</h1>
+        <p>Modern websites and standout graphics. Front-end and full-stack development, logos, branding, banners and more — built fast, responsive, and conversion-focused.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="services.html">Explore Services</a>
+          <a class="btn btn-ghost" href="#portfolio">See Work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title">Studio by Azzi</h2>
+      <p class="section-lead">Web development and graphic design crafted to elevate your business. Clean code, refined visuals, and clear strategy to help you launch, scale, and stand out.</p>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio" class="section">
+    <div class="container">
+      <h2 class="section-title reveal">Selected Work</h2>
+      <div class="grid portfolio-grid">
+        <figure class="portfolio-item reveal"><img src="images/portfolio1.jpg" alt="Logo design project 1" data-lightbox="images/portfolio1.jpg"><figcaption>Restaurant Logo</figcaption></figure>
+        <figure class="portfolio-item reveal"><img src="images/portfolio2.jpg" alt="Branding project 2" data-lightbox="images/portfolio2.jpg"><figcaption>Brand Identity</figcaption></figure>
+        <figure class="portfolio-item reveal"><img src="images/portfolio3.jpg" alt="Banner design project 3" data-lightbox="images/portfolio3.jpg"><figcaption>Promotional Banner</figcaption></figure>
+        <figure class="portfolio-item reveal"><img src="images/portfolio4.jpg" alt="Logo design project 4" data-lightbox="images/portfolio4.jpg"><figcaption>Stella's Table Logo</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section section-alt">
+    <div class="container contact">
+      <div>
+        <h2 class="section-title">Let's Work Together</h2>
+        <p class="section-lead">Tell me about your project and goals. I'll reply with a tailored plan and quote.</p>
+        <ul class="contact-list">
+          <li><a href="tel:+919906617652">+91 99066 17652</a></li>
+          <li><a href="mailto:studiobyazzi@gmail.com">studiobyazzi@gmail.com</a></li>
+          <li><a href="https://wa.me/919906617652" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+      <form class="contact-form" action="mailto:studiobyazzi@gmail.com" method="post" enctype="text/plain">
+        <label>
+          Name
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          What do you need?
+          <select name="service">
+            <option>Front-end website</option>
+            <option>Full-stack website</option>
+            <option>Logo design</option>
+            <option>Business panels/banners</option>
+            <option>Brand kit</option>
+          </select>
+        </label>
+        <label>
+          Project details
+          <textarea name="details" rows="4" placeholder="Briefly describe your project, target audience, and timeline."></textarea>
+        </label>
+        <button class="btn btn-primary" type="submit">Send Inquiry</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> Studio by Azzi. All rights reserved.</p>
+      <div class="socials">
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Node and server artifacts
+server/node_modules/
+server/.env
+server/data/
+
+# General
+node_modules/
+.DS_Store
+dist/
+build/
+coverage/
+*.log
+
