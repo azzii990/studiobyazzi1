@@ -120,7 +120,7 @@ app.post('/api/orders', async (req, res) => {
         await transporter.sendMail({
           from: `Studio by Azzi <${SMTP_USER}>`,
           to: ADMIN_EMAIL,
-          subject: `New Order ${order.id} â€” ${order.serviceTitle}`,
+          subject:  `New Order ${order.id} — ${order.serviceTitle}`, 
           text: `New order received\n\nID: ${order.id}\nName: ${name}\nEmail: ${email}\nPhone: ${order.phone}\nService: ${order.serviceTitle}\nBudget: ${order.budget}\nDetails: ${order.details}\nCreated: ${order.createdAt}`
         });
       } catch (e) {
@@ -204,7 +204,7 @@ app.post('/api/ai-chat', async (req, res) => {
       role: 'system',
       content: `You are Azzi's assistant for Studio by Azzi (web development).
 Answer briefly, friendly, and helpful. Use INR pricing.
-Services and starting prices:\n${services.map(s=>`${s.title}: ₹${s.startingPrice}+`).join('\n')}
+Services and starting prices:\n${services.map(s=>`${s.title}: ₹₹${s.startingPrice}+`).join('\n')}
 UPI: 9906617652@omni. Phone/WhatsApp: +91 99066 17652. Email: bhtazim2018@gmail.com.`
     };
     let reply = '';
