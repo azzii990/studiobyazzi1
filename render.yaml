@@ -4,9 +4,13 @@ services:
     env: node
     plan: free
     rootDir: server
-    buildCommand: npm install
+    buildCommand: npm ci
     startCommand: npm start
     autoDeploy: true
+    disks:
+      - name: data
+        mountPath: /opt/render/project/src/server/data
+        sizeGB: 1
     envVars:
       - key: ADMIN_TOKEN
         sync: false  # set in Render dashboard
@@ -26,4 +30,3 @@ services:
         sync: false
       - key: SMTP_PASS
         sync: false
-

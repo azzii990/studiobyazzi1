@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /payment.html
+
+Sitemap: /sitemap.xml
+

@@ -56,71 +56,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 // Mobile nav toggle
 const navToggle = document.querySelector('.nav-toggle');
 if (navToggle) {
-  // Add SVG hamburger and ARIA state
-  navToggle.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-  navToggle.setAttribute('aria-expanded', 'false');
   navToggle.addEventListener('click', () => {
-    const open = document.body.classList.toggle('nav-open');
-    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.classList.toggle('nav-open');
   });
 }
 document.querySelectorAll('.main-nav a').forEach(link => {
   link.addEventListener('click', () => document.body.classList.remove('nav-open'));
 });
-
-// Hero spotlight cursor effect
-(function heroSpotlight(){
-  const hero = document.querySelector('.hero');
-  if (!hero) return;
-  let raf = 0, px = 0, py = 0;
-  const set = (x, y) => {
-    hero.style.setProperty('--mx', x + '%');
-    hero.style.setProperty('--my', y + '%');
-  };
-  const onMove = (clientX, clientY) => {
-    const r = hero.getBoundingClientRect();
-    const x = ((clientX - r.left) / r.width) * 100;
-    const y = ((clientY - r.top) / r.height) * 100;
-    px = Math.max(0, Math.min(100, x));
-    py = Math.max(0, Math.min(100, y));
-    if (!raf) raf = requestAnimationFrame(() => { set(px, py); raf = 0; });
-  };
-  hero.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
-  hero.addEventListener('mouseleave', () => set(50, 50));
-  hero.addEventListener('touchstart', (e) => {
-    const t = e.touches[0]; if (t) onMove(t.clientX, t.clientY);
-  }, { passive: true });
-  hero.addEventListener('touchmove', (e) => {
-    const t = e.touches[0]; if (t) onMove(t.clientX, t.clientY);
-  }, { passive: true });
-})();
-
-// Typography/copy cleanup for corrupted characters
-(function cleanCopy(){
-  const replacements = new Map([
-    ['Front�?`end', 'Front‑end'],
-    ['Full�?`stack', 'Full‑stack'],
-    ['Back�?`end', 'Back‑end'],
-    ['E�?`commerce', 'E‑commerce'],
-    ['SEO�?`ready', 'SEO‑ready'],
-    ['�?"', '—'],
-    ['Ac ', '© '],
-    ['�?�', '…'],
-    ['�~�', '☰'],
-    ['�,1', '₹']
-  ]);
-  const walker = document.createTreeWalker(document, NodeFilter.SHOW_TEXT);
-  const nodes = [];
-  while (walker.nextNode()) nodes.push(walker.currentNode);
-  for (const n of nodes) {
-    let t = n.nodeValue;
-    let changed = false;
-    replacements.forEach((to, from) => {
-      if (t.includes(from)) { t = t.split(from).join(to); changed = true; }
-    });
-    if (changed) n.nodeValue = t;
-  }
-})();
 
 // Reveal on scroll
 const revealEls = document.querySelectorAll('.reveal');
@@ -184,8 +126,6 @@ const qpNote = document.getElementById('qpNote');
 const openUpi = document.getElementById('openUpi');
 const copyUpiLink = document.getElementById('copyUpiLink');
 const qpStatus = document.getElementById('qpStatus');
-const upiQr = document.getElementById('upiQr');
-const qrWrap = document.getElementById('qrWrap');
 const UPI_ID = '9906617652@omni';
 const UPI_PN = encodeURIComponent('Studio by Azzi');
 
@@ -197,13 +137,6 @@ function buildUpiLink() {
   if (!Number.isNaN(a) && a > 0) parts.push(`am=${encodeURIComponent(a.toFixed(2))}`);
   if (n) parts.push(`tn=${encodeURIComponent(n)}`);
   return parts.join('&');
-}
-
-function updateUpiQR() {
-  if (!upiQr || !qrWrap) return;
-  const link = buildUpiLink();
-  upiQr.src = 'https://chart.googleapis.com/chart?cht=qr&chs=220x220&chl=' + encodeURIComponent(link);
-  qrWrap.style.display = 'block';
 }
 
 function showQPStatus(msg) {
@@ -218,7 +151,6 @@ if (openUpi) {
     window.location.href = link;
     showQPStatus('If nothing opens, copy the link and open on your phone.');
     confetti();
-    updateUpiQR();
   });
 }
 
@@ -232,25 +164,8 @@ if (copyUpiLink) {
     } catch {
       showQPStatus('Could not copy automatically. Select and copy: ' + link);
     }
-    updateUpiQR();
   });
 }
-
-// Quick amount buttons
-document.querySelectorAll('.quick-amounts [data-amount]')?.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const val = parseFloat(btn.getAttribute('data-amount'));
-    if (qpAmount && !Number.isNaN(val)) {
-      qpAmount.value = val;
-      updateUpiQR();
-      showQPStatus('Amount set to ₹' + val.toLocaleString('en-IN'));
-    }
-  });
-});
-
-// Update QR when amount/note changes
-qpAmount?.addEventListener('input', updateUpiQR);
-qpNote?.addEventListener('input', updateUpiQR);
 
 // Tips toggle
 const tipsToggle = document.getElementById('tipsToggle');
@@ -269,17 +184,17 @@ if (tipsToggle && tipsContent) {
   if (document.querySelector('.chat-launcher')) return;
   const launcher = document.createElement('button');
   launcher.className = 'chat-launcher';
-  launcher.title = 'Ask AI';
+  launcher.title = 'Chat with Azzi';
   launcher.textContent = '💬';
   const win = document.createElement('div');
   win.className = 'chat-window';
   win.innerHTML = `
     <div class="chat-header">
-      <h3>AI Assistant</h3>
+      <h3>Chat with Azzi</h3>
       <button class="btn btn-outline" data-close-chat title="Close">×</button>
     </div>
     <div class="chat-body" id="chatBody">
-      <div class="chat-msg bot">Hi! I’m Azzi’s AI assistant. Ask anything about services, pricing, timelines, or tech.</div>
+      <div class="chat-msg bot">Hi! Tell me your name, email and what you need. I reply fast.</div>
     </div>
     <form class="chat-form" id="chatForm">
       <input type="text" id="chatInput" placeholder="Type your message..." required />
@@ -288,12 +203,6 @@ if (tipsToggle && tipsContent) {
   document.body.appendChild(launcher);
   document.body.appendChild(win);
 
-  // Replace launcher text with SVG icon for a cleaner look
-  launcher.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12c0 4.418-4.03 8-9 8-1.03 0-2.015-.15-2.93-.427L3 21l1.53-4.59C3.56 15.14 3 13.62 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  // Ensure close button shows a proper symbol
-  const closeBtnFix = win.querySelector('[data-close-chat]');
-  if (closeBtnFix) closeBtnFix.textContent = '×';
-
   const chatBody = win.querySelector('#chatBody');
   const chatForm = win.querySelector('#chatForm');
   const chatInput = win.querySelector('#chatInput');
@@ -301,8 +210,6 @@ if (tipsToggle && tipsContent) {
 
   function open(){ win.classList.add('open'); chatInput.focus(); }
   function close(){ win.classList.remove('open'); }
-  // Expose a global opener for header buttons
-  window.openAIChat = open;
   launcher.addEventListener('click', () => {
     if (win.classList.contains('open')) close(); else open();
   });
@@ -334,20 +241,18 @@ if (tipsToggle && tipsContent) {
       aiHistory.push({ role: 'user', content: text });
       aiHistory.push({ role: 'assistant', content: botReply });
 
-      // AI-only mode: no background lead logging
+      // Also log as lead in background
+      const emailMatch = text.match(/[\w.-]+@[\w.-]+\.[A-Za-z]{2,}/);
+      const nameMatch = text.split(/[\.!?]/)[0].split(' ').slice(0,2).join(' ');
+      await fetch(`${BACKEND_BASE_URL}/api/chat`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: nameMatch, email: emailMatch?.[0] || '', message: text, page: location.pathname })
+      });
     } catch (err) {
       pushBot("I'm here, but something went wrong sending your message. You can WhatsApp me: +91 99066 17652");
     }
   });
 })();
-
-// Header "Ask AI" buttons
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-open-ai]');
-  if (!btn) return;
-  e.preventDefault();
-  if (typeof window.openAIChat === 'function') window.openAIChat();
-});
 
 // Order modal logic (Services page)
 const orderModal = document.getElementById('orderModal');
@@ -398,3 +303,5 @@ if (orderForm) {
     }
   });
 }
+
+

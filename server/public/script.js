@@ -1,4 +1,4 @@
-// Configure your backend base URL here (leave empty for same-origin)
+﻿// Configure your backend base URL here (leave empty for same-origin)
 const BACKEND_BASE_URL = '';
 
 // Tabs switching
@@ -98,16 +98,16 @@ document.querySelectorAll('.main-nav a').forEach(link => {
 // Typography/copy cleanup for corrupted characters
 (function cleanCopy(){
   const replacements = new Map([
-    ['Front�?`end', 'Front‑end'],
-    ['Full�?`stack', 'Full‑stack'],
-    ['Back�?`end', 'Back‑end'],
-    ['E�?`commerce', 'E‑commerce'],
-    ['SEO�?`ready', 'SEO‑ready'],
-    ['�?"', '—'],
-    ['Ac ', '© '],
-    ['�?�', '…'],
-    ['�~�', '☰'],
-    ['�,1', '₹']
+    ['Frontï¿½?`end', 'Frontâ€‘end'],
+    ['Fullï¿½?`stack', 'Fullâ€‘stack'],
+    ['Backï¿½?`end', 'Backâ€‘end'],
+    ['Eï¿½?`commerce', 'Eâ€‘commerce'],
+    ['SEOï¿½?`ready', 'SEOâ€‘ready'],
+    ['ï¿½?"', 'â€”'],
+    ['Ac ', 'Â© '],
+    ['ï¿½?ï¿½', 'â€¦'],
+    ['ï¿½~ï¿½', 'â˜°'],
+    ['ï¿½,1', 'â‚¹']
   ]);
   const walker = document.createTreeWalker(document, NodeFilter.SHOW_TEXT);
   const nodes = [];
@@ -243,7 +243,7 @@ document.querySelectorAll('.quick-amounts [data-amount]')?.forEach(btn => {
     if (qpAmount && !Number.isNaN(val)) {
       qpAmount.value = val;
       updateUpiQR();
-      showQPStatus('Amount set to ₹' + val.toLocaleString('en-IN'));
+      showQPStatus('Amount set to â‚¹' + val.toLocaleString('en-IN'));
     }
   });
 });
@@ -270,16 +270,16 @@ if (tipsToggle && tipsContent) {
   const launcher = document.createElement('button');
   launcher.className = 'chat-launcher';
   launcher.title = 'Ask AI';
-  launcher.textContent = '💬';
+  launcher.textContent = 'ðŸ’¬';
   const win = document.createElement('div');
   win.className = 'chat-window';
   win.innerHTML = `
     <div class="chat-header">
       <h3>AI Assistant</h3>
-      <button class="btn btn-outline" data-close-chat title="Close">×</button>
+      <button class="btn btn-outline" data-close-chat title="Close">Ã—</button>
     </div>
     <div class="chat-body" id="chatBody">
-      <div class="chat-msg bot">Hi! I’m Azzi’s AI assistant. Ask anything about services, pricing, timelines, or tech.</div>
+      <div class="chat-msg bot">Hi! Tell me your name, email and what you need. I reply fast.</div>
     </div>
     <form class="chat-form" id="chatForm">
       <input type="text" id="chatInput" placeholder="Type your message..." required />
@@ -292,7 +292,7 @@ if (tipsToggle && tipsContent) {
   launcher.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12c0 4.418-4.03 8-9 8-1.03 0-2.015-.15-2.93-.427L3 21l1.53-4.59C3.56 15.14 3 13.62 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   // Ensure close button shows a proper symbol
   const closeBtnFix = win.querySelector('[data-close-chat]');
-  if (closeBtnFix) closeBtnFix.textContent = '×';
+  if (closeBtnFix) closeBtnFix.textContent = 'Ã—';
 
   const chatBody = win.querySelector('#chatBody');
   const chatForm = win.querySelector('#chatForm');
@@ -322,7 +322,7 @@ if (tipsToggle && tipsContent) {
     pushUser(text); chatInput.value='';
     try {
       // Send to AI
-      const typing = document.createElement('div'); typing.className = 'chat-msg bot'; typing.textContent = '…'; chatBody.appendChild(typing); chatBody.scrollTop = chatBody.scrollHeight;
+      const typing = document.createElement('div'); typing.className = 'chat-msg bot'; typing.textContent = 'â€¦'; chatBody.appendChild(typing); chatBody.scrollTop = chatBody.scrollHeight;
       const aiRes = await fetch(`${BACKEND_BASE_URL}/api/ai-chat`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, history: aiHistory })
@@ -398,3 +398,4 @@ if (orderForm) {
     }
   });
 }
+

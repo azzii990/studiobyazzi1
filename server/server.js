@@ -1,4 +1,4 @@
-import fs from 'fs';
+﻿import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
@@ -20,6 +20,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_DIR = path.join(__dirname, 'data');
 const ROOT_DIR = path.resolve(__dirname, '..');
+const PUBLIC_DIR = path.join(__dirname, 'public');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 const MESSAGES_FILE = path.join(DATA_DIR, 'messages.json');
 
@@ -49,7 +50,8 @@ app.use(cors({
   }
 }));
 
-// Serve static frontend from project root
+// Serve static frontend: prefer bundled public/ inside server, then fall back to project root
+app.use(express.static(PUBLIC_DIR));
 app.use(express.static(ROOT_DIR));
 
 // Basic health
@@ -59,11 +61,9 @@ app.get('/api/health', (_req, res) => {
 
 // Services catalog (edit as needed)
 const services = [
-  { key: 'frontend', title: 'Front-end Website', startingPrice: 12000, currency: 'INR' },
-  { key: 'fullstack', title: 'Full-stack Website', startingPrice: 45000, currency: 'INR' },
-  { key: 'logo', title: 'Logo Design', startingPrice: 4000, currency: 'INR' },
-  { key: 'panels', title: 'Business Panels & Banners', startingPrice: 2500, currency: 'INR' },
-  { key: 'brandkit', title: 'Brand Kit', startingPrice: 8500, currency: 'INR' }
+  { key: 'basic', title: 'Basic Plan', startingPrice: 8000, currency: 'INR', description: 'Single landing page (front-end). Responsive UI, SEO basics, analytics hookup.' },
+  { key: 'standard', title: 'Standard Plan', startingPrice: 15000, currency: 'INR', description: 'Multi-page site (front-end). Up to 5 pages, navigation, SEO meta, sitemap.' },
+  { key: 'premium', title: 'Premium Plan', startingPrice: 25000, currency: 'INR', description: 'Full-stack e-commerce with auth, catalog, cart, checkout, and admin.' }
 ];
 
 app.get('/api/services', (_req, res) => {
@@ -115,7 +115,7 @@ app.post('/api/orders', async (req, res) => {
         await transporter.sendMail({
           from: `Studio by Azzi <${SMTP_USER}>`,
           to: ADMIN_EMAIL,
-          subject: `New Order ${order.id} — ${order.serviceTitle}`,
+          subject: `New Order ${order.id} â€” ${order.serviceTitle}`,
           text: `New order received\n\nID: ${order.id}\nName: ${name}\nEmail: ${email}\nPhone: ${order.phone}\nService: ${order.serviceTitle}\nBudget: ${order.budget}\nDetails: ${order.details}\nCreated: ${order.createdAt}`
         });
       } catch (e) {
@@ -148,29 +148,29 @@ app.get('/api/orders/:id', (req, res) => {
 // --- AI chat (optional OpenAI) ---
 function ruleBasedReply(user, services) {
   const msg = (user || '').toLowerCase();
-  const bullets = services.map(s => `- ${s.title} — starting ₹${s.startingPrice}`).join('\n');
+  const bullets = services.map(s => `- ${s.title} â€” starting â‚¹${s.startingPrice}`).join('\n');
   if (/price|cost|rate|charges?/.test(msg)) {
     return `Here are my starting prices:\n${bullets}\nI can share a precise quote after a quick brief on features and timeline.`;
   }
   if (/logo|brand/.test(msg)) {
-    return `I design distinctive logos and brand kits with multiple concepts and revisions. You’ll get vector, PNG, and SVG exports, plus a mini brand guide.`;
+    return `I design distinctive logos and brand kits with multiple concepts and revisions. Youâ€™ll get vector, PNG, and SVG exports, plus a mini brand guide.`;
   }
   if (/front\s*-?end|landing|website/.test(msg)) {
-    return `Front‑end sites are fast, responsive, and SEO‑ready. Perfect for landing or marketing pages. If you need logins, dashboards, or payments, a full‑stack solution fits better.`;
+    return `Frontâ€‘end sites are fast, responsive, and SEOâ€‘ready. Perfect for landing or marketing pages. If you need logins, dashboards, or payments, a fullâ€‘stack solution fits better.`;
   }
   if (/full\s*-?stack|backend|database|auth/.test(msg)) {
-    return `Full‑stack includes database, APIs, and admin panels. Secure and scalable with clear documentation. We can scope features and integrations you need.`;
+    return `Fullâ€‘stack includes database, APIs, and admin panels. Secure and scalable with clear documentation. We can scope features and integrations you need.`;
   }
   if (/time|timeline|how long|deliver/.test(msg)) {
-    return `Typical timelines: logos 2‑5 days, front‑end websites 5‑10 days, full‑stack MVPs 2‑4 weeks depending on scope.`;
+    return `Typical timelines: logos 2â€‘5 days, frontâ€‘end websites 5â€‘10 days, fullâ€‘stack MVPs 2â€‘4 weeks depending on scope.`;
   }
   if (/pay|payment|upi|advance|price link/.test(msg)) {
-    return `I accept UPI (9906617652@omni) and bank transfer. Usually it’s 50% to start and the rest on delivery/approval. I can also send a payment link.`;
+    return `I accept UPI (9906617652@omni) and bank transfer. Usually itâ€™s 50% to start and the rest on delivery/approval. I can also send a payment link.`;
   }
   if (/contact|whats.?app|phone|email/.test(msg)) {
-    return `You can reach me at WhatsApp +91 99066 17652 or email studiobyazzi@gmail.com. Happy to chat!`;
+    return `You can reach me at WhatsApp +91 99066 17652 or email bhtazim2018@gmail.com. Happy to chat!`;
   }
-  return `Tell me what you’re looking to build (front‑end, full‑stack, logo, banners). Share any reference sites and deadlines — I’ll suggest the best plan and pricing.`;
+  return `Tell me what youâ€™re looking to build (frontâ€‘end, fullâ€‘stack, logo, banners). Share any reference sites and deadlines â€” Iâ€™ll suggest the best plan and pricing.`;
 }
 
 async function callOpenAI(messages) {
@@ -197,10 +197,10 @@ app.post('/api/ai-chat', async (req, res) => {
     if (!message || typeof message !== 'string') return res.status(400).json({ error: 'message required' });
     const sys = {
       role: 'system',
-      content: `You are Azzi's assistant for Studio by Azzi (web development and graphic design).
+      content: `You are Azzi's assistant for Studio by Azzi (web development).
 Answer briefly, friendly, and helpful. Use INR pricing.
 Services and starting prices:\n${services.map(s=>`${s.title}: ₹${s.startingPrice}+`).join('\n')}
-UPI: 9906617652@omni. Phone/WhatsApp: +91 99066 17652. Email: studiobyazzi@gmail.com.`
+UPI: 9906617652@omni. Phone/WhatsApp: +91 99066 17652. Email: bhtazim2018@gmail.com.`
     };
     let reply = '';
     if (OPENAI_API_KEY) {
@@ -209,10 +209,10 @@ UPI: 9906617652@omni. Phone/WhatsApp: +91 99066 17652. Email: studiobyazzi@gmail
         reply = await callOpenAI(messages);
       } catch (e) {
         // Fallback to rules if API call fails
-        reply = ruleBasedReply(message, services);
+        reply = webRuleBasedReply(message, services);
       }
     } else {
-      reply = ruleBasedReply(message, services);
+      reply = webRuleBasedReply(message, services);
     }
     res.json({ reply });
   } catch (e) {
@@ -220,6 +220,31 @@ UPI: 9906617652@omni. Phone/WhatsApp: +91 99066 17652. Email: studiobyazzi@gmail
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+// Web-only rule-based replies (fallback)
+function webRuleBasedReply(user, services) {
+  const msg = (user || '').toLowerCase();
+  const bullets = services.map(s => `- ${s.title} â€” starting â‚¹${s.startingPrice}`).join('\n');
+  if (/price|cost|rate|charges?/.test(msg)) {
+    return `Here are my plans and starting prices:\n${bullets}\nPayment terms: 50% upfront to start, 50% after completion.`;
+  }
+  if (/front\s*-?end|landing|website/.test(msg)) {
+    return `Front-end sites are fast, responsive, and SEO-ready. The Basic plan (â‚¹8k) covers a clean landing page; Standard (â‚¹15k) covers a multi-page site.`;
+  }
+  if (/full\s*-?stack|backend|database|auth|e-?comm|commerce/.test(msg)) {
+    return `Premium (â‚¹25k) is full-stack with auth, product catalog, cart, checkout, and an admin dashboard.`;
+  }
+  if (/time|timeline|how long|deliver/.test(msg)) {
+    return `Typical timelines: Basic 3â€“5 days, Standard 7â€“12 days, Premium 2â€“4 weeks depending on scope.`;
+  }
+  if (/pay|payment|upi|advance|price link/.test(msg)) {
+    return `I accept UPI (9906617652@omni) and bank transfer. Payment terms: 50% upfront, 50% on delivery.`;
+  }
+  if (/contact|whats.?app|phone|email/.test(msg)) {
+    return `You can reach me at WhatsApp +91 99066 17652 or email bhtazim2018@gmail.com. Happy to chat!`;
+  }
+  return `Tell me about your project and which plan (Basic, Standard, Premium) youâ€™re considering. Share any references and deadlines â€” Iâ€™ll suggest the best approach and pricing.`;
+}
 
 // --- Chat (public submit) ---
 app.post('/api/chat', async (req, res) => {
@@ -351,3 +376,4 @@ app.listen(PORT, () => {
   console.log(`Studio by Azzi backend listening on http://localhost:${PORT}`);
   console.log('Frontend available at the same URL. Open your browser to view the site.');
 });
+
