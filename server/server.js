@@ -204,20 +204,27 @@ app.post('/api/ai-chat', async (req, res) => {
       role: 'system',
       content: `You are Azzi's assistant for Studio by Azzi (web development).
 Answer briefly, friendly, and helpful. Use INR pricing.
-Services and starting prices:\n${services.map(s=>`${s.title}: ₹₹${s.startingPrice}+`).join('\n')}
+₹S₹e₹r₹v₹i₹c₹e₹s₹ ₹a₹n₹d₹ ₹s₹t₹a₹r₹t₹i₹n₹g₹ ₹p₹r₹i₹c₹e₹s₹:₹₹n₹$₹{₹s₹e₹r₹v₹i₹c₹e₹s₹.₹m₹a₹p₹(₹s₹=₹>₹`₹$₹{₹s₹.₹t₹i₹t₹l₹e₹}₹:₹ ₹₹₹₹₹$₹{₹s₹.₹s₹t₹a₹r₹t₹i₹n₹g₹P₹r₹i₹c₹e₹}₹+₹`₹)₹.₹j₹o₹i₹n₹(₹'₹₹n₹'₹)₹}₹
 UPI: 9906617652@omni. Phone/WhatsApp: +91 99066 17652. Email: bhtazim2018@gmail.com.`
     };
     let reply = '';
+    const servicesLine = "Services and starting prices:\n" + services.map(s => `${s.title}: ₹${s.startingPrice}+`).join("\n");
+    const systemContent = [
+      "You are Azzi's assistant for Studio by Azzi (web development).",
+      "Answer briefly, friendly, and helpful. Use INR pricing.",
+      servicesLine,
+      "UPI: 9906617652@omni. Phone/WhatsApp: +91 99066 17652. Email: bhtazim2018@gmail.com."
+    ].join("\n");
     if (OPENAI_API_KEY) {
       try {
-        const messages = [sys, ...history, { role: 'user', content: message }];
+        const messages = [{ role: 'system', content: systemContent }, ...history, { role: 'user', content: message }];
         reply = await callOpenAI(messages);
       } catch (e) {
         // Fallback to rules if API call fails
-        reply = webRuleBasedReply(message, services);
+        reply = cleanWebRuleBasedReply(message, services);
       }
     } else {
-      reply = webRuleBasedReply(message, services);
+      reply = cleanWebRuleBasedReply(message, services);
     }
     res.json({ reply });
   } catch (e) {
@@ -382,3 +389,28 @@ app.listen(PORT, () => {
   console.log('Frontend available at the same URL. Open your browser to view the site.');
 });
 
+
+// Clean web-only rule-based replies (normalized text)
+function cleanWebRuleBasedReply(user, services) {
+  const msg = (user || '').toLowerCase();
+  const bullets = services.map(s => -  — starting ₹).join('\n');
+  if (/price|cost|rate|charges?/.test(msg)) {
+    return Here are my plans and starting prices:\n\nPayment terms: 50% upfront to start, 50% after completion.;
+  }
+  if (/front\s*-?end|landing|website/.test(msg)) {
+    return Front-end sites are fast, responsive, and SEO-ready. The Basic plan (₹8k) covers a clean landing page; Standard (₹15k) covers a multi-page site.;
+  }
+  if (/full\s*-?stack|backend|database|auth|e-?comm|commerce/.test(msg)) {
+    return Premium (₹25k) is full-stack with auth, product catalog, cart, checkout, and an admin dashboard.;
+  }
+  if (/time|timeline|how long|deliver/.test(msg)) {
+    return Typical timelines: Basic 3–5 days, Standard 7–12 days, Premium 2–4 weeks depending on scope.;
+  }
+  if (/pay|payment|upi|advance|price link/.test(msg)) {
+    return I accept UPI (9906617652@omni) and bank transfer. Payment terms: 50% upfront, 50% on delivery.;
+  }
+  if (/contact|whats.?app|phone|email/.test(msg)) {
+    return You can reach me at WhatsApp +91 99066 17652 or email bhtazim2018@gmail.com. Happy to chat!;
+  }
+  return Tell me about your project and which plan (Basic, Standard, Premium) you're considering. Share any references and deadlines — I'll suggest the best approach and pricing.;
+}
