@@ -82,7 +82,7 @@ img, video, svg { max-width: 100%; height: auto; }
 .hero-inner { position: relative; z-index: 1; padding: 64px 0; }
 @media (max-width: 520px) { .hero-inner { padding: 48px 0; } }
 .hero-text { max-width: 760px; }
-.hero h1 { margin: 0 0 12px; font-size: clamp(28px, 5vw, 44px); line-height: 1.15; }
+.hero h1 { margin: 0 0 12px; font-size: clamp(26px, 4.6vw, 40px); line-height: 1.15; }
 .hero p { margin: 0 0 20px; color: var(--muted); font-size: clamp(16px, 2.2vw, 18px); }
 .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
@@ -90,13 +90,13 @@ img, video, svg { max-width: 100%; height: auto; }
 .page-hero { position: relative; display: grid; place-items: center; min-height: 44vh; background: center/cover no-repeat; }
 .page-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,13,16,0.45), rgba(11,13,16,0.85)); }
 .page-hero .container { position: relative; z-index: 1; padding: 48px 0; text-align: center; }
-.page-hero h1 { margin: 0; font-size: clamp(26px, 4.8vw, 40px); }
+.page-hero h1 { margin: 0; font-size: clamp(24px, 4.4vw, 36px); }
 .page-hero p { color: var(--muted); margin: 10px auto 0; max-width: 740px; }
 
 /* Sections */
 .section { padding: 64px 0; background: var(--bg); }
 .section-alt { padding: 64px 0; background: var(--bg-2); }
-.section-title { font-size: clamp(22px, 3.2vw, 32px); margin: 0 0 10px; }
+.section-title { font-size: clamp(20px, 2.8vw, 28px); margin: 0 0 10px; }
 .section-lead { color: var(--muted); margin: 8px 0 0; max-width: 780px; }
 
 /* Reveal on scroll */
@@ -234,3 +234,28 @@ code { background: #0b111a; border: 1px solid var(--line); padding: 2px 6px; bor
 .step { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
 .step h3 { margin: 0 0 6px; }
 .step p { margin: 0; color: var(--muted); }
+
+/* --- Mobile polish + payment summary --- */
+@media (max-width: 520px) {
+  .container { width: 94%; }
+  .brand img { height: 22px; }
+  .header-cta { gap: 6px; flex-wrap: wrap; }
+  .btn { padding: 10px 12px; font-size: 14px; }
+}
+
+/* Reusable card */
+.payment-box { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.payment-box .grid label { display: grid; gap: 6px; color: var(--muted); font-weight: 600; }
+.payment-box input, .payment-box select, .payment-box textarea { background: #0f141d; border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 10px; font: inherit; }
+.payment-box input:focus, .payment-box select:focus, .payment-box textarea:focus { outline: 2px solid var(--brand); border-color: var(--brand); }
+.quick-amounts { overflow: auto; }
+.quick-amounts .btn { padding: 8px 10px; min-height: 36px; }
+
+/* Summary rows */
+.cart-item { display:flex; justify-content:space-between; align-items:center; padding:8px 6px; border-bottom:1px dashed var(--line); }
+.cart-item b { font-weight: 600; }
+
+/* Footer stack on small */
+@media (max-width: 600px) {
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 8px; }
+}

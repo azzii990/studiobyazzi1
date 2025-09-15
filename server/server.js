@@ -63,7 +63,12 @@ app.get('/api/health', (_req, res) => {
 const services = [
   { key: 'basic', title: 'Basic Plan', startingPrice: 8000, currency: 'INR', description: 'Single landing page (front-end). Responsive UI, SEO basics, analytics hookup.' },
   { key: 'standard', title: 'Standard Plan', startingPrice: 15000, currency: 'INR', description: 'Multi-page site (front-end). Up to 5 pages, navigation, SEO meta, sitemap.' },
-  { key: 'premium', title: 'Premium Plan', startingPrice: 25000, currency: 'INR', description: 'Full-stack e-commerce with auth, catalog, cart, checkout, and admin.' }
+  { key: 'premium', title: 'Premium Plan', startingPrice: 25000, currency: 'INR', description: 'Full-stack e-commerce with auth, catalog, cart, checkout, and admin.' },
+  // Add-ons / monthly services
+  { key: 'maintenance', title: 'Website Maintenance (Monthly)', startingPrice: 2000, currency: 'INR', description: 'Core/plugin updates, uptime checks, backups, minor fixes, priority support.' },
+  { key: 'seo', title: 'SEO Monthly', startingPrice: 3000, currency: 'INR', description: 'On-page improvements, keywords, performance tuning, monthly report.' },
+  { key: 'updates', title: 'Content & Image Updates', startingPrice: 1500, currency: 'INR', description: 'Up to 10 content/image changes per batch with optimization.' },
+  { key: 'revisions', title: 'Extra Revisions Pack', startingPrice: 1000, currency: 'INR', description: 'Three extra design/content revision rounds on existing work.' },
 ];
 
 app.get('/api/services', (_req, res) => {

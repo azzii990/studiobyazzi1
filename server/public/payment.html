@@ -30,9 +30,11 @@
         <a href="/index.html#contact">Contact</a>
       </nav>
       <div class="header-cta">
-        <a class="btn btn-outline" href="#" data-open-ai aria-label="Ask AI">Ask AI</a>
-        <a class="btn btn-outline" href="https://wa.me/919906617652" target="_blank" rel="noopener" aria-label="WhatsApp Chat">WhatsApp</a>
-        <a class="btn btn-primary" href="mailto:bhtazim2018@gmail.com?subject=Project%20Inquiry&body=Hi%20Azzi,%20I'm%20interested%20in%20your%20services.%20Here's%20my%20project%20summary:%20" aria-label="Get a Quote">Get a Quote</a>
+        <a class="btn btn-outline" href="https://wa.me/919906617652" target="_blank" rel="noopener" aria-label="WhatsApp Chat">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.52 3.48A11.93 11.93 0 0 0 12.06 0C5.54 0 .29 5.25.29 11.76c0 2.07.54 4.09 1.57 5.88L0 24l6.55-1.8a11.78 11.78 0 0 0 5.51 1.4h.01c6.52 0 11.77-5.25 11.77-11.76 0-3.14-1.22-6.09-3.32-8.29ZM12.06 21.3h-.01a9.6 9.6 0 0 1-4.9-1.34l-.35-.2-3.88 1.06 1.04-3.78-.23-.39a9.56 9.56 0 0 1-1.47-5.08c0-5.3 4.32-9.62 9.64-9.62 2.57 0 4.98 1 6.79 2.8 1.81 1.8 2.82 4.2 2.82 6.76 0 5.3-4.32 9.62-9.65 9.62Zm5.3-7.18c-.29-.15-1.7-.84-1.96-.94-.26-.1-.45-.15-.63.15-.18.29-.72.94-.89 1.14-.16.19-.33.22-.62.08-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.43-1.7-1.6-1.99-.17-.3-.02-.46.13-.61.14-.14.29-.36.44-.55.15-.19.19-.33.29-.55.1-.22.05-.41-.02-.56-.07-.15-.63-1.52-.86-2.08-.23-.56-.47-.48-.63-.49-.16-.01-.35-.01-.54-.01s-.5.07-.76.36c-.26.29-1 1-1 2.43 0 1.43 1.03 2.8 1.18 2.99.15.19 2.03 3.1 4.92 4.35.69.3 1.23.48 1.65.61.69.22 1.31.19 1.8.12.55-.08 1.7-.7 1.94-1.37.24-.67.24-1.24.17-1.37-.07-.13-.26-.21-.56-.36Z" fill="currentColor"/></svg>
+          <span>Chat</span>
+        </a>
+        <a class="btn btn-primary" href="/payment.html" aria-label="Order Now">Order Now</a>
       </div>
     </div>
   </header>
@@ -46,6 +48,18 @@
 
   <section class="section">
     <div class="container">
+      <div class="payment-box reveal" id="orderSummaryBox" style="margin-bottom:16px">
+        <h2 class="section-title">Order Summary</h2>
+        <div id="orderSummary"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+          <span>Total</span>
+          <b id="orderTotal">₹0</b>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="btn btn-primary" id="proceedToPay">Proceed to Pay</button>
+          <a class="btn btn-outline" href="/services.html">Edit Cart</a>
+        </div>
+      </div>
       <div class="payment-box reveal">
         <h2>UPI / Bank Transfer</h2>
         <p class="section-lead">Send payments directly via UPI. Add a note with your name and project.</p>
@@ -71,16 +85,11 @@
       </div>
 
       <div class="payment-box reveal" style="margin-top:16px">
-        <h2>Tips</h2>
-        <button class="btn btn-outline" id="tipsToggle">Show Payment Tips</button>
-        <div id="tipsContent" style="display:none;margin-top:10px">
-          <ul class="features">
-            <li>Confirm total and plan (Basic/Standard/Premium) in your note.</li>
-            <li>UPI preferred. Bank details available on request.</li>
-            <li>Receive invoice and receipt by email.</li>
-          </ul>
-          <a class="btn btn-ghost" href="mailto:bhtazim2018@gmail.com?subject=Request%20Bank%20Details&body=Hi%20Azzi,%20please%20share%20bank%20details%20for%20payment.">Request Details</a>
-          <a class="btn btn-primary" href="mailto:bhtazim2018@gmail.com?subject=Request%20Payment%20Link&body=Hi%20Azzi,%20please%20send%20a%20payment%20link%20for%20Rs%20_____.">Request Payment Link</a>
+        <h2 class="section-title">Bank Transfer</h2>
+        <p class="section-lead">Prefer bank transfer? I’ll share account details and an invoice within minutes.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+          <a class="btn btn-outline" href="mailto:bhtazim2018@gmail.com?subject=Request%20Bank%20Details&body=Hi%20Azzi,%20please%20share%20bank%20details%20for%20payment.">Request Bank Details</a>
+          <a class="btn btn-primary" href="mailto:bhtazim2018@gmail.com?subject=Request%20Invoice&body=Hi%20Azzi,%20please%20send%20an%20invoice%20for%20Rs%20_____.">Request Invoice</a>
         </div>
       </div>
 

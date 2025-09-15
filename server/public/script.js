@@ -288,6 +288,10 @@ if (tipsToggle && tipsContent) {
   document.body.appendChild(launcher);
   document.body.appendChild(win);
 
+  // Normalize first bot message (avoid weird quotes)
+  const firstBot = win.querySelector('.chat-msg.bot');
+  if (firstBot) firstBot.textContent = "Hi! I'm Azzi's AI assistant. Ask anything about services, pricing, timelines, or tech.";
+
   // Replace launcher text with SVG icon for a cleaner look
   launcher.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12c0 4.418-4.03 8-9 8-1.03 0-2.015-.15-2.93-.427L3 21l1.53-4.59C3.56 15.14 3 13.62 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   // Ensure close button shows a proper symbol
@@ -323,6 +327,7 @@ if (tipsToggle && tipsContent) {
     try {
       // Send to AI
       const typing = document.createElement('div'); typing.className = 'chat-msg bot'; typing.textContent = 'â€¦'; chatBody.appendChild(typing); chatBody.scrollTop = chatBody.scrollHeight;
+      typing.textContent = '...';
       const aiRes = await fetch(`${BACKEND_BASE_URL}/api/ai-chat`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, history: aiHistory })
@@ -356,14 +361,20 @@ const orderStatus = document.getElementById('orderStatus');
 const orderServiceName = document.getElementById('orderServiceName');
 const orderServiceKey = document.getElementById('orderServiceKey');
 
+// Redirect to payment with plan details instead of opening modal
+const PLAN_AMOUNTS = { basic: 8000, standard: 15000, premium: 25000, maintenance: 2000, seo: 3000, updates: 1500, revisions: 1000 };
 document.querySelectorAll('.order-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    if (!orderModal) return;
-    orderServiceName.textContent = btn.dataset.serviceTitle || 'Selected Service';
-    orderServiceKey.value = btn.dataset.service || '';
-    orderStatus.style.display = 'none';
-    orderStatus.textContent = '';
-    orderModal.classList.add('open');
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const key = btn.dataset.service || '';
+    const amt = PLAN_AMOUNTS[key] || '';
+    const title = btn.dataset.serviceTitle || '';
+    const params = new URLSearchParams();
+    if (key) params.set('plan', key);
+    if (amt) params.set('amount', String(amt));
+    if (title) params.set('title', title);
+    const base = (location.pathname.endsWith('/services.html') || location.pathname.includes('/services.html')) ? '/payment.html' : '/payment.html';
+    location.href = base + '?' + params.toString();
   });
 });
 
@@ -398,4 +409,175 @@ if (orderForm) {
     }
   });
 }
+
+// Prefill payment page from URL query (plan, amount, title, note)
+try {
+  const qp = new URLSearchParams(location.search);
+  const urlAmt = parseFloat(qp.get('amount') || '');
+  const urlPlan = qp.get('plan') || '';
+  const urlTitle = qp.get('title') || '';
+  const urlNote = qp.get('note') || '';
+  if (!Number.isNaN(urlAmt) && qpAmount) {
+    qpAmount.value = urlAmt;
+    if (typeof updateUpiQR === 'function') updateUpiQR();
+  }
+  if (qpNote && (urlNote || urlPlan || urlTitle)) {
+    if (urlNote) {
+      qpNote.value = urlNote;
+    } else {
+      const pieces = [];
+      if (urlTitle) pieces.push(urlTitle);
+      if (urlPlan) pieces.push('plan: ' + urlPlan);
+      qpNote.value = pieces.join(' | ');
+    }
+  }
+} catch {}
+
+// --- Simple cart (localStorage) ---
+(function cartInit(){
+  const PLAN_AMOUNTS = { basic: 8000, standard: 15000, premium: 25000 };
+  const CART_KEY = 'sba_cart';
+  const getCart = () => { try { return JSON.parse(localStorage.getItem(CART_KEY)||'[]'); } catch { return []; } };
+  const setCart = (c) => { localStorage.setItem(CART_KEY, JSON.stringify(c)); updateCartCount(); renderCartList(); };
+  const updateCartCount = () => {
+    const el = document.getElementById('cartCount');
+    if (el) el.textContent = String(getCart().length);
+  };
+
+  const injectCartBtn = () => {
+    const hdr = document.querySelector('.header-cta');
+    if (!hdr || hdr.querySelector('[data-open-cart]')) return;
+    const a = document.createElement('a');
+    a.href = '#'; a.className = 'btn btn-outline'; a.setAttribute('data-open-cart',''); a.setAttribute('aria-label','Cart');
+    a.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6h.01M6 6l1.2 9.6a2 2 0 0 0 2 1.8h6.9a2 2 0 0 0 1.98-1.7l1.3-7.7H7.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.6" fill="currentColor"/><circle cx="18" cy="20" r="1.6" fill="currentColor"/></svg> <span id="cartCount">0</span>';
+    hdr.appendChild(a);
+    updateCartCount();
+  };
+
+  let drawer; let listEl; let totalEl;
+  const ensureDrawer = () => {
+    if (drawer) return drawer;
+    const style = document.createElement('style');
+    style.textContent = `
+    .cart-drawer{position:fixed;inset:0;z-index:200;display:none}
+    .cart-drawer.open{display:block}
+    .cart-drawer__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+    .cart-drawer__panel{position:absolute;right:0;top:0;bottom:0;width:min(420px,92%);background:#141922;border-left:1px solid #1e2733;color:#e8eef5;display:flex;flex-direction:column}
+    .cart-drawer__header{padding:12px 14px;border-bottom:1px solid #1e2733;display:flex;justify-content:space-between;align-items:center}
+    .cart-drawer__body{padding:10px;overflow:auto;flex:1}
+    .cart-drawer__footer{padding:12px 14px;border-top:1px solid #1e2733}
+    .cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px 6px;border-bottom:1px dashed #1e2733}
+    .cart-item b{font-weight:600}
+    .cart-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+    `;
+    document.head.appendChild(style);
+    drawer = document.createElement('div');
+    drawer.className = 'cart-drawer';
+    drawer.innerHTML = `
+      <div class="cart-drawer__backdrop" data-close-cart></div>
+      <div class="cart-drawer__panel">
+        <div class="cart-drawer__header"><b>Your Cart</b><button class="btn btn-outline" data-close-cart>Close</button></div>
+        <div class="cart-drawer__body"><div id="cartItems"></div></div>
+        <div class="cart-drawer__footer">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span>Total</span>
+            <b id="cartTotal">₹0</b>
+          </div>
+          <div class="cart-actions">
+            <button class="btn btn-outline" id="cartClear">Clear</button>
+            <button class="btn btn-primary" id="cartCheckout">Checkout</button>
+          </div>
+        </div>
+      </div>`;
+    document.body.appendChild(drawer);
+    listEl = drawer.querySelector('#cartItems');
+    totalEl = drawer.querySelector('#cartTotal');
+    drawer.addEventListener('click', (e) => {
+      if (e.target.closest('[data-close-cart]')) drawer.classList.remove('open');
+    });
+    drawer.querySelector('#cartClear').addEventListener('click', () => { setCart([]); });
+    drawer.querySelector('#cartCheckout').addEventListener('click', () => {
+      const cart = getCart();
+      if (!cart.length) return;
+      const total = cart.reduce((s,i)=> s + (i.price||0), 0);
+      const note = cart.map(i=> `${i.title} (₹${i.price})`).join(' | ');
+      const params = new URLSearchParams({ amount: String(total), note, title: 'Cart' });
+      location.href = '/payment.html?' + params.toString();
+    });
+    return drawer;
+  };
+
+  const renderCartList = () => {
+    ensureDrawer();
+    const cart = getCart();
+    listEl.innerHTML = '';
+    let total = 0;
+    cart.forEach((it, idx) => {
+      total += it.price || 0;
+      const row = document.createElement('div');
+      row.className = 'cart-item';
+      row.innerHTML = `<div><b>${it.title}</b><div style="color:#b3c0d4;font-size:12px">₹${(it.price||0).toLocaleString('en-IN')}</div></div><button class="btn btn-outline" data-remove-item="${idx}">Remove</button>`;
+      listEl.appendChild(row);
+    });
+    totalEl.textContent = '₹' + total.toLocaleString('en-IN');
+    updateCartCount();
+  };
+
+  document.addEventListener('click', (e) => {
+    const openBtn = e.target.closest('[data-open-cart]');
+    const removeBtn = e.target.closest('[data-remove-item]');
+    if (openBtn) { e.preventDefault(); ensureDrawer(); renderCartList(); drawer.classList.add('open'); }
+    if (removeBtn) { const idx = Number(removeBtn.getAttribute('data-remove-item')); const cart = getCart(); cart.splice(idx,1); setCart(cart); renderCartList(); }
+  });
+
+  document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const key = btn.dataset.service || '';
+      const title = btn.dataset.serviceTitle || 'Selected Service';
+      const price = PLAN_AMOUNTS[key] || 0;
+      const item = { key, title, price };
+      const cart = getCart(); cart.push(item); setCart(cart);
+      ensureDrawer(); renderCartList(); drawer.classList.add('open');
+    });
+  });
+
+  injectCartBtn();
+  updateCartCount();
+})();
+
+// Payment page summary rendering
+(function paymentSummary(){
+  const box = document.getElementById('orderSummaryBox');
+  if (!box) return;
+  const listHost = document.getElementById('orderSummary');
+  const totalEl = document.getElementById('orderTotal');
+  const proceed = document.getElementById('proceedToPay');
+  const CART_KEY = 'sba_cart';
+  const cart = (() => { try { return JSON.parse(localStorage.getItem(CART_KEY)||'[]'); } catch { return []; } })();
+  const items = cart.length ? cart : (() => {
+    const qp = new URLSearchParams(location.search);
+    const key = qp.get('plan')||''; const title = qp.get('title')||'Selected Service';
+    const price = parseFloat(qp.get('amount')||'') || 0;
+    return key || price ? [{ key, title, price }] : [];
+  })();
+  let total = 0;
+  listHost.innerHTML = '';
+  items.forEach(it => {
+    total += it.price||0;
+    const row = document.createElement('div');
+    row.className = 'cart-item';
+    row.innerHTML = `<div><b>${it.title}</b><div style="color:#b3c0d4;font-size:12px">₹${(it.price||0).toLocaleString('en-IN')}</div></div>`;
+    listHost.appendChild(row);
+  });
+  totalEl.textContent = '₹' + total.toLocaleString('en-IN');
+  // Keep UPI fields in sync
+  const qa = document.getElementById('qpAmount');
+  const qn = document.getElementById('qpNote');
+  if (qa) qa.value = total || qa.value;
+  if (qn && items.length) qn.value = items.map(i=> `${i.title} (₹${i.price})`).join(' | ');
+  document.getElementById('proceedToPay')?.addEventListener('click', (e) => {
+    e.preventDefault(); document.getElementById('openUpi')?.click();
+  });
+})();
 
