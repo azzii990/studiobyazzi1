@@ -1,4 +1,4 @@
-﻿import fs from 'fs';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
@@ -160,20 +160,26 @@ app.get('/api/orders/:id', (req, res) => {
 });
 
 // --- AI chat (optional OpenAI) ---
-function ruleBasedReply(user, services) {\n  return webRuleBasedReply(user, services);\n}\n\nasync function callOpenAI(messages) {
+function ruleBasedReply(user, services) {
+  return webRuleBasedReply(user, services);
+}
+
+async function callOpenAI(messages) {
   const resp = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      "Authorization": `Bearer ${OPENAI_API_KEY}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       model: AI_MODEL,
       messages,
-      temperature: 0.4,
+      temperature: 0.4
     })
   });
-  if (!resp.ok) throw new Error(`OpenAI error: ${resp.status}`);
+  if (!resp.ok) {
+    throw new Error(`OpenAI error: ${resp.status}`);
+  }
   const data = await resp.json();
   return data.choices?.[0]?.message?.content?.trim() || '';
 }
@@ -181,36 +187,41 @@ function ruleBasedReply(user, services) {\n  return webRuleBasedReply(user, serv
 app.post('/api/ai-chat', async (req, res) => {
   try {
     const { message, history = [] } = req.body || {};
-    if (!message || typeof message !== 'string') return res.status(400).json({ error: 'message required' });
-    const sys = {
-      role: 'system',
-      content: `You are Azzi's assistant for Studio by Azzi (web development).
-Answer briefly, friendly, and helpful. Use INR pricing.
-?S?e?r?v?i?c?e?s? ?a?n?d? ?s?t?a?r?t?i?n?g? ?p?r?i?c?e?s?:??n?$?{?s?e?r?v?i?c?e?s?.?m?a?p?(?s?=?>?`?$?{?s?.?t?i?t?l?e?}?:? ?????$?{?s?.?s?t?a?r?t?i?n?g?P?r?i?c?e?}?+?`?)?.?j?o?i?n?(?'??n?'?)?}?
-UPI: 9906617652@omni. Phone/WhatsApp: +91 99066 17652. Email: bhtazim2018@gmail.com.`
-    };
-    let reply = '';
-    const servicesLine = "Services and starting prices:\n" + services.map(s => `${s.title}: ?${s.startingPrice}+`).join("\n");
+    if (!message || typeof message !== 'string') {
+      return res.status(400).json({ error: 'message required' });
+    }
+
+    const servicesLine = 'Services and starting prices:\n' + services
+      .map(s => `${s.title}: Rs ${s.startingPrice}+`)
+      .join('\n');
+
     const systemContent = [
       "You are Azzi's assistant for Studio by Azzi (web development).",
-      "Answer briefly, friendly, and helpful. Use INR pricing.",
+      'Answer briefly, friendly, and helpful. Use INR pricing.',
       servicesLine,
-      "UPI: 9906617652@omni. Phone/WhatsApp: +91 99066 17652. Email: bhtazim2018@gmail.com."
-    ].join("\n");
+      'UPI: 9906617652@omni. Phone/WhatsApp: +91 99066 17652. Email: bhtazim2018@gmail.com.'
+    ].join('\n');
+
+    let reply = '';
+
     if (OPENAI_API_KEY) {
       try {
-        const messages = [{ role: 'system', content: systemContent }, ...history, { role: 'user', content: message }];
+        const messages = [
+          { role: 'system', content: systemContent },
+          ...history,
+          { role: 'user', content: message }
+        ];
         reply = await callOpenAI(messages);
-      } catch (e) {
-        // Fallback to rules if API call fails
+      } catch (err) {
         reply = cleanWebRuleBasedReply(message, services);
       }
     } else {
       reply = cleanWebRuleBasedReply(message, services);
     }
+
     res.json({ reply });
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -223,22 +234,23 @@ function webRuleBasedReply(user, services) {
     return `Here are my plans and starting prices:\n${bullets}\nPayment terms: 50% upfront to start, 50% after completion.`;
   }
   if (/front\s*-?end|landing|website/.test(msg)) {
-    return `Front-end sites are fast, responsive, and SEO-ready. The Basic plan (Rs 8,999) covers a clean landing page; Standard (Rs 16,999) covers a multi-page site.`;
+    return 'Front-end sites are fast, responsive, and SEO-ready. The Basic plan (Rs 8,999) covers a clean landing page; Standard (Rs 16,999) covers a multi-page site.';
   }
   if (/full\s*-?stack|backend|database|auth|e-?comm|commerce/.test(msg)) {
-    return `Premium (Rs 29,999) includes full-stack work with auth, product catalog, cart, checkout, and an admin dashboard.`;
+    return 'Premium (Rs 29,999) includes full-stack work with auth, product catalog, cart, checkout, and an admin dashboard.';
   }
   if (/time|timeline|how long|deliver/.test(msg)) {
-    return `Typical timelines: Basic 3-5 days, Standard 7-12 days, Premium 2-4 weeks depending on scope.`;
+    return 'Typical timelines: Basic 3-5 days, Standard 7-12 days, Premium 2-4 weeks depending on scope.';
   }
   if (/pay|payment|upi|advance|price link/.test(msg)) {
-    return `I accept UPI (9906617652@omni) and bank transfer. Payment terms: 50% upfront, 50% on delivery.`;
+    return 'I accept UPI (9906617652@omni) and bank transfer. Payment terms: 50% upfront, 50% on delivery.';
   }
   if (/contact|whats.?app|phone|email/.test(msg)) {
-    return `You can reach me at WhatsApp +91 99066 17652 or email bhtazim2018@gmail.com. Happy to chat!`;
+    return 'You can reach me at WhatsApp +91 99066 17652 or email bhtazim2018@gmail.com. Happy to chat!';
   }
-  return `Tell me about your project and which plan (Basic, Standard, Premium) you are considering. Share any references and deadlines and I will suggest the best approach and pricing.`;
+  return 'Tell me about your project and which plan (Basic, Standard, Premium) you are considering. Share any references and deadlines and I will suggest the best approach and pricing.';
 }
+
 // --- Chat (public submit) ---
 app.post('/api/chat', async (req, res) => {
   try {
@@ -381,7 +393,16 @@ app.listen(PORT, () => {
 
 
 // Clean web-only rule-based replies (normalized text)
-function cleanWebRuleBasedReply(user, services) {\n  return webRuleBasedReply(user, services);\n}\n\n
+function cleanWebRuleBasedReply(user, services) {
+  return webRuleBasedReply(user, services);
+}
+
+
+
+
+
+
+
 
 
 
