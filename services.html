@@ -3,274 +3,163 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Services & Pricing — Studio by Azzi</title>
-  <meta name="description" content="Choose from Basic (₹8k), Standard (₹15k), or Premium (₹25k) plans. 50% upfront, 50% on completion." />
+  <title>Services - Studio by Azzi</title>
+  <meta name="description" content="Explore affordable web development services from Studio by Azzi, tailored to help local businesses grow online." />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#0b0d10" />
-  <link rel="canonical" href="/services.html" />
-  <link rel="alternate" hreflang="en" href="/services.html" />
-  <!-- Open Graph -->
-  <meta property="og:site_name" content="Studio by Azzi" />
-  <meta property="og:title" content="Services & Pricing — Studio by Azzi" />
-  <meta property="og:description" content="Three clear web development plans with transparent pricing. 50% upfront, 50% on completion." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="/services.html" />
-  <meta property="og:image" content="/images/og-image.jpg" />
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Services & Pricing — Studio by Azzi" />
-  <meta name="twitter:description" content="Three clear web development plans with transparent pricing. 50% upfront, 50% on completion." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="canonical" href="services.html" />
+  <link rel="alternate" hreflang="en" href="services.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="images/LOGO.png" />
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html"><img src="images/LOGO.png" alt="Studio by Azzi logo" /><span>Studio by Azzi</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
-      <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="services.html#pricing">Pricing</a>
-        <a href="payment.html">Payment</a>
-        <a href="index.html#contact">Contact</a>
+      <a class="brand" href="index.html">
+        <img src="images/LOGO.png" alt="Studio by Azzi logo" />
+        <span>Studio by Azzi</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="main-nav" id="siteNav">
+        <a href="index.html#home">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html" class="active">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
       </nav>
       <div class="header-cta">
-        <a class="btn btn-outline" href="https://wa.me/919906617652" target="_blank" rel="noopener" aria-label="WhatsApp Chat">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.52 3.48A11.93 11.93 0 0 0 12.06 0C5.54 0 .29 5.25.29 11.76c0 2.07.54 4.09 1.57 5.88L0 24l6.55-1.8a11.78 11.78 0 0 0 5.51 1.4h.01c6.52 0 11.77-5.25 11.77-11.76 0-3.14-1.22-6.09-3.32-8.29ZM12.06 21.3h-.01a9.6 9.6 0 0 1-4.9-1.34l-.35-.2-3.88 1.06 1.04-3.78-.23-.39a9.56 9.56 0 0 1-1.47-5.08c0-5.3 4.32-9.62 9.64-9.62 2.57 0 4.98 1 6.79 2.8 1.81 1.8 2.82 4.2 2.82 6.76 0 5.3-4.32 9.62-9.65 9.62Zm5.3-7.18c-.29-.15-1.7-.84-1.96-.94-.26-.1-.45-.15-.63.15-.18.29-.72.94-.89 1.14-.16.19-.33.22-.62.08-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.43-1.7-1.6-1.99-.17-.3-.02-.46.13-.61.14-.14.29-.36.44-.55.15-.19.19-.33.29-.55.1-.22.05-.41-.02-.56-.07-.15-.63-1.52-.86-2.08-.23-.56-.47-.48-.63-.49-.16-.01-.35-.01-.54-.01s-.5.07-.76.36c-.26.29-1 1-1 2.43 0 1.43 1.03 2.8 1.18 2.99.15.19 2.03 3.1 4.92 4.35.69.3 1.23.48 1.65.61.69.22 1.31.19 1.8.12.55-.08 1.7-.7 1.94-1.37.24-.67.24-1.24.17-1.37-.07-.13-.26-.21-.56-.36Z" fill="currentColor"/></svg>
-          <span>Chat</span>
-        </a>
-        <a class="btn btn-primary" href="payment.html" aria-label="Order Now">Order Now</a>
+        <button class="btn btn-ghost" type="button" data-open-ai>Ask AI</button>
+        <a class="btn btn-primary" href="contact.html">Get a Quote</a>
       </div>
     </div>
   </header>
 
-  <!-- Services Hero -->
-  <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1600&auto=format&fit=crop')">
-    <div class="container">
-      <h1 class="section-title">Services</h1>
-      <p class="section-lead">Choose a plan that fits your project. 50% upfront, 50% on completion.</p>
-    </div>
-  </section>
-
-  <section class="section section-alt">
-    <div class="container">
-      <h2 class="section-title">Add-ons & Monthly Services</h2>
-      <div class="cards">
-        <article class="card reveal">
-          <h3>Website Maintenance (Monthly)</h3>
-          <p>Keep your site healthy with updates, backups, and fixes.</p>
-          <ul class="features">
-            <li>Core/CMS updates + security patches</li>
-            <li>Backups + uptime checks</li>
-            <li>Minor fixes and priority support</li>
-          </ul>
-          <div class="card-footer">
-            <span class="price">₹2,000</span>
-            <button class="btn btn-primary order-btn" data-service="maintenance" data-service-title="Website Maintenance (Monthly)">Order Now</button>
-            <button class="btn btn-outline add-to-cart" data-service="maintenance" data-service-title="Website Maintenance (Monthly)">Add to Cart</button>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <h3>SEO Monthly</h3>
-          <p>Boost visibility with on-page improvements and reporting.</p>
-          <ul class="features">
-            <li>On-page fixes + metadata</li>
-            <li>Keyword targeting & monitoring</li>
-            <li>Monthly performance report</li>
-          </ul>
-          <div class="card-footer">
-            <span class="price">₹3,000</span>
-            <button class="btn btn-primary order-btn" data-service="seo" data-service-title="SEO Monthly">Order Now</button>
-            <button class="btn btn-outline add-to-cart" data-service="seo" data-service-title="SEO Monthly">Add to Cart</button>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <h3>Content & Image Updates</h3>
-          <p>Up to 10 changes per batch; optimized images included.</p>
-          <ul class="features">
-            <li>Copy edits + new sections</li>
-            <li>Image optimization & replacements</li>
-            <li>Fast turnaround</li>
-          </ul>
-          <div class="card-footer">
-            <span class="price">₹1,500</span>
-            <button class="btn btn-primary order-btn" data-service="updates" data-service-title="Content & Image Updates">Order Now</button>
-            <button class="btn btn-outline add-to-cart" data-service="updates" data-service-title="Content & Image Updates">Add to Cart</button>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <h3>Extra Revisions Pack</h3>
-          <p>Three additional revision rounds on existing work.</p>
-          <ul class="features">
-            <li>Flexible iteration</li>
-            <li>Design or content scope</li>
-            <li>Clear change logs</li>
-          </ul>
-          <div class="card-footer">
-            <span class="price">₹1,000</span>
-            <button class="btn btn-primary order-btn" data-service="revisions" data-service-title="Extra Revisions Pack">Order Now</button>
-            <button class="btn btn-outline add-to-cart" data-service="revisions" data-service-title="Extra Revisions Pack">Add to Cart</button>
-          </div>
-        </article>
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Our Web Development Services</span>
+        <h1>Tailored solutions to meet your business needs</h1>
+        <p>From brand-new builds to ongoing support, we deliver affordable, professional websites that help local businesses grow.</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  
-
-  <section class="section">
-    <div class="container">
-      <h1 class="section-title reveal">Plans</h1>
-      <p class="section-lead reveal">Clear scope and deliverables across three tiers. All plans include responsive design, performance, and on-page SEO basics.</p>
-
-      <div class="cards">
-        <article class="card reveal">
-          <h3>Basic Plan</h3>
-          <p>Single landing page (front-end only). Built fast with clean, responsive UI.</p>
-          <ul class="features">
-            <li>Sections: Hero, features, about, CTA, contact</li>
-            <li>Responsive layout + modern UI components</li>
-            <li>On-page SEO (meta, titles) + analytics hookup</li>
-            <li>Performance and accessibility pass</li>
-          </ul>
-          <div class="card-footer">
-            <span class="price">₹8,000</span>
-            <button class="btn btn-primary order-btn" data-service="basic" data-service-title="Basic Plan">Order Now</button>
-            <button class="btn btn-outline add-to-cart" data-service="basic" data-service-title="Basic Plan">Add to Cart</button>
-          </div>
-        </article>
-
-        <article class="card card--featured reveal">
-          <span class="badge">Most Popular</span>
-          <h3>Standard Plan</h3>
-          <p>Multi-page website (front-end only). Great for small businesses and portfolios.</p>
-          <ul class="features">
-            <li>Up to 5 pages (Home, About, Services, Work, Contact)</li>
-            <li>Reusable components + clean navigation</li>
-            <li>SEO meta + sitemap + analytics</li>
-            <li>Contact form wiring (mailto/WhatsApp)</li>
-          </ul>
-          <div class="card-footer">
-            <span class="price">₹15,000</span>
-            <button class="btn btn-primary order-btn" data-service="standard" data-service-title="Standard Plan">Order Now</button>
-            <button class="btn btn-outline add-to-cart" data-service="standard" data-service-title="Standard Plan">Add to Cart</button>
-          </div>
-        </article>
-
-        <article class="card reveal">
-          <h3>Premium Plan</h3>
-          <p>Full-stack e-commerce website. Products, cart, checkout, admin, and more.</p>
-          <ul class="features">
-            <li>Auth (sign-in/sign-up) + roles</li>
-            <li>Product catalog + search + filters</li>
-            <li>Cart + checkout (payment integration ready)</li>
-            <li>Admin dashboard (manage products/orders)</li>
-          </ul>
-          <div class="card-footer">
-            <span class="price">₹25,000</span>
-            <button class="btn btn-primary order-btn" data-service="premium" data-service-title="Premium Plan">Order Now</button>
-            <button class="btn btn-outline add-to-cart" data-service="premium" data-service-title="Premium Plan">Add to Cart</button>
-          </div>
-        </article>
+    <section class="section pricing-section">
+      <div class="container">
+        <div class="section-head pricing-head">
+          <span class="eyebrow">Simple pricing</span>
+          <h2>Pick the plan that fits your next launch</h2>
+          <p class="section-lead">Transparent packages for every stage of your business, from first site to full online engine.</p>
+        </div>
+        <div class="pricing-grid">
+          <article class="pricing-card">
+            <span class="pricing-tier">Basic</span>
+            <header class="pricing-card-header">
+              <div>
+                <span class="pricing-price"><small>Rs</small>8,999</span>
+                <p class="pricing-subtitle">Essential launch kit</p>
+              </div>
+            </header>
+            <p class="pricing-description">Launch fast with the essentials: polished pages, contact flows, and local SEO basics so customers can find you.</p>
+            <ul class="pricing-features">
+              <li>Up to 4 custom pages with responsive layouts</li>
+              <li>Contact form, Google Maps, and WhatsApp links</li>
+              <li>Starter copy guidance and basic on-page SEO</li>
+              <li>One revision cycle + launch checklist</li>
+            </ul>
+            <div class="pricing-card-footer">
+              <button class="btn btn-ghost add-to-cart" type="button" data-plan-id="basic" data-plan-name="Basic Plan" data-plan-price="8999">Add to Cart</button>
+              <a class="btn btn-outline" href="payment.html?plan=basic&amount=8999&title=Basic%20Plan">Pay Now</a>
+            </div>
+          </article>
+          <article class="pricing-card is-featured">
+            <span class="pricing-badge">Most popular</span>
+            <span class="pricing-tier">Standard</span>
+            <header class="pricing-card-header">
+              <div>
+                <span class="pricing-price"><small>Rs</small>16,999</span>
+                <p class="pricing-subtitle">Growth-ready presence</p>
+              </div>
+            </header>
+            <p class="pricing-description">Everything in Basic plus stronger storytelling, lead capture, and content tools to keep customers coming back.</p>
+            <ul class="pricing-features">
+              <li>Up to 8 pages with tailored copy support</li>
+              <li>Blog or portfolio module for easy updates</li>
+              <li>Lead capture automations and analytics setup</li>
+              <li>Two revision cycles + launch support call</li>
+            </ul>
+            <div class="pricing-card-footer">
+              <button class="btn btn-ghost add-to-cart" type="button" data-plan-id="standard" data-plan-name="Standard Plan" data-plan-price="16999">Add to Cart</button>
+              <a class="btn btn-primary" href="payment.html?plan=standard&amount=16999&title=Standard%20Plan">Pay Now</a>
+            </div>
+          </article>
+          <article class="pricing-card">
+            <span class="pricing-tier">Premium</span>
+            <header class="pricing-card-header">
+              <div>
+                <span class="pricing-price"><small>Rs</small>29,999</span>
+                <p class="pricing-subtitle">Advanced web + automation</p>
+              </div>
+            </header>
+            <p class="pricing-description">Best for teams ready to sell online or integrate custom workflows with high-touch optimisation and support.</p>
+            <ul class="pricing-features">
+              <li>Up to 12 pages plus landing page variations</li>
+              <li>E-commerce or booking integration with training</li>
+              <li>Advanced SEO, performance tuning, and analytics dashboards</li>
+              <li>30 days of post-launch updates & priority support</li>
+            </ul>
+            <div class="pricing-card-footer">
+              <button class="btn btn-ghost add-to-cart" type="button" data-plan-id="premium" data-plan-name="Premium Plan" data-plan-price="29999">Add to Cart</button>
+              <a class="btn btn-outline" href="payment.html?plan=premium&amount=29999&title=Premium%20Plan">Pay Now</a>
+            </div>
+          </article>
+        </div>
+        <p class="pricing-note">Need something more customised? <a href="contact.html">Tell us about your project</a> and we'll tailor a plan.</p>
       </div>
-      <p class="note" style="margin-top:12px">Payment terms: 50% upfront to start, 50% after completion and approval.</p>
-    </div>
-  </section>
+    </section>
 
-  <section id="pricing" class="section section-alt">
-    <div class="container">
-      <h2 class="section-title">Plans & Pricing</h2>
-      <div class="pricing">
-        <div class="pricing-column">
-          <h3>Basic</h3>
-          <ul>
-            <li><span>Landing page (front-end)</span><b>₹8,000</b></li>
-          </ul>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Why partner with us</span>
+          <h2>Affordable, professional, and friendly</h2>
+          <p class="section-lead">We handle the technical work so you can focus on running your business. Expect clear communication, honest advice, and a website you are proud to share.</p>
         </div>
-        <div class="pricing-column">
-          <h3>Standard</h3>
-          <ul>
-            <li><span>Multi-page site (front-end)</span><b>₹15,000</b></li>
-          </ul>
+        <div class="bullets">
+          <div>
+            <h3>Transparent pricing</h3>
+            <p>Know exactly what is included with straightforward packages and no surprise fees.</p>
+          </div>
+          <div>
+            <h3>Fast turnaround</h3>
+            <p>Typical projects launch in just a few weeks thanks to our focused, proven process.</p>
+          </div>
+          <div>
+            <h3>Local focus</h3>
+            <p>We understand the challenges local businesses face and design solutions that speak to your audience.</p>
+          </div>
         </div>
-        <div class="pricing-column">
-          <h3>Premium</h3>
-          <ul>
-            <li><span>Full-stack e-commerce</span><b>₹25,000</b></li>
-          </ul>
+        <div class="services-cta">
+          <a class="btn btn-primary" href="contact.html">Get Started Today</a>
         </div>
       </div>
-      <p class="note">Payment terms: 50% upfront to start, 50% after completion and approval.</p>
-      <div style="margin-top:16px">
-        <a class="btn btn-primary" href="payment.html">Proceed to Payment</a>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© <span id="year"></span> Studio by Azzi. All rights reserved.</p>
+      <p>&copy; <span id="year"></span> Studio by Azzi. All rights reserved.</p>
       <div class="socials">
         <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://www.instagram.com/bhat___azim/" target="_blank" rel="noopener">Instagram</a>
+        <a href="mailto:bhtazim2018@gmail.com">Email</a>
       </div>
     </div>
   </footer>
 
-  <!-- Order Modal -->
-  <div class="modal" id="orderModal" aria-hidden="true">
-    <div class="modal__backdrop" data-close-modal></div>
-    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
-      <button class="modal__close" title="Close" data-close-modal>&times;</button>
-      <h2 id="orderTitle">Place Your Order</h2>
-      <p class="section-lead" id="orderServiceLabel">Service: <span id="orderServiceName"></span></p>
-      <form id="orderForm" class="order-form">
-        <input type="hidden" name="serviceKey" id="orderServiceKey" />
-        <label> Name <input type="text" name="name" required /></label>
-        <label> Email <input type="email" name="email" required /></label>
-        <label> Phone <input type="tel" name="phone" placeholder="Optional" /></label>
-        <label> Budget (₹) <input type="number" name="budget" min="0" step="100" placeholder="Optional" /></label>
-        <label> Details <textarea name="details" rows="4" placeholder="Describe what you need"></textarea></label>
-        <button type="submit" class="btn btn-primary" id="orderSubmit">Submit Order</button>
-        <p class="note" id="orderStatus" role="status" style="display:none"></p>
-      </form>
-    </div>
-  </div>
-
   <script src="script.js"></script>
-  <!-- Structured Data: Service Offers -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "itemListElement": [
-      {
-        "@type": "Service",
-        "name": "Basic Plan",
-        "description": "Single landing page (front-end). Responsive UI, SEO basics, analytics hookup.",
-        "offers": { "@type": "Offer", "priceCurrency": "INR", "price": "8000" }
-      },
-      {
-        "@type": "Service",
-        "name": "Standard Plan",
-        "description": "Multi-page site (front-end). Up to 5 pages, navigation, SEO meta, sitemap.",
-        "offers": { "@type": "Offer", "priceCurrency": "INR", "price": "15000" }
-      },
-      {
-        "@type": "Service",
-        "name": "Premium Plan",
-        "description": "Full-stack e-commerce with auth, catalog, cart, checkout, and admin.",
-        "offers": { "@type": "Offer", "priceCurrency": "INR", "price": "25000" }
-      }
-    ]
-  }
-  </script>
 </body>
 </html>

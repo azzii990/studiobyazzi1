@@ -3,114 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Payment - Studio by Azzi</title>
-  <meta name="description" content="Pay securely for Studio by Azzi services via UPI or bank transfer. 50% upfront, 50% on delivery." />
+  <title>Payment · Studio by Azzi</title>
+  <meta name="description" content="Pay securely for Studio by Azzi services. 50% deposit to book, balance on delivery. UPI quick pay or bank transfer available." />
   <meta name="robots" content="noindex, follow" />
   <link rel="canonical" href="/payment.html" />
-  <meta property="og:title" content="Payment - Studio by Azzi" />
+  <meta property="og:title" content="Payment · Studio by Azzi" />
   <meta property="og:description" content="Secure payment options for Studio by Azzi services." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="/payment.html" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="images/LOGO.png" />
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html"><img src="images/LOGO.png" alt="Studio by Azzi logo" /><span>Studio by Azzi</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu"></button>
-      <nav class="main-nav">
-        <a href="index.html">Home</a>
+      <a class="brand" href="index.html">
+        <img src="images/LOGO.png" alt="Studio by Azzi logo" />
+        <span>Studio by Azzi</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="main-nav" id="siteNav">
+        <a href="index.html#home">Home</a>
         <a href="services.html">Services</a>
         <a href="services.html#pricing">Pricing</a>
         <a href="payment.html">Payment</a>
         <a href="index.html#contact">Contact</a>
       </nav>
       <div class="header-cta">
-        <a class="btn btn-outline" href="https://wa.me/919906617652" target="_blank" rel="noopener" aria-label="WhatsApp Chat">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.52 3.48A11.93 11.93 0 0 0 12.06 0C5.54 0 .29 5.25.29 11.76c0 2.07.54 4.09 1.57 5.88L0 24l6.55-1.8a11.78 11.78 0 0 0 5.51 1.4h.01c6.52 0 11.77-5.25 11.77-11.76 0-3.14-1.22-6.09-3.32-8.29ZM12.06 21.3h-.01a9.6 9.6 0 0 1-4.9-1.34l-.35-.2-3.88 1.06 1.04-3.78-.23-.39a9.56 9.56 0 0 1-1.47-5.08c0-5.3 4.32-9.62 9.64-9.62 2.57 0 4.98 1 6.79 2.8 1.81 1.8 2.82 4.2 2.82 6.76 0 5.3-4.32 9.62-9.65 9.62Zm5.3-7.18c-.29-.15-1.7-.84-1.96-.94-.26-.1-.45-.15-.63.15-.18.29-.72.94-.89 1.14-.16.19-.33.22-.62.08-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.43-1.7-1.6-1.99-.17-.3-.02-.46.13-.61.14-.14.29-.36.44-.55.15-.19.19-.33.29-.55.1-.22.05-.41-.02-.56-.07-.15-.63-1.52-.86-2.08-.23-.56-.47-.48-.63-.49-.16-.01-.35-.01-.54-.01s-.5.07-.76.36c-.26.29-1 1-1 2.43 0 1.43 1.03 2.8 1.18 2.99.15.19 2.03 3.1 4.92 4.35.69.3 1.23.48 1.65.61.69.22 1.31.19 1.8.12.55-.08 1.7-.7 1.94-1.37.24-.67.24-1.24.17-1.37-.07-.13-.26-.21-.56-.36Z" fill="currentColor"/></svg>
-          <span>Chat</span>
-        </a>
-        <a class="btn btn-primary" href="payment.html" aria-label="Order Now">Order Now</a>
+        <button class="btn btn-ghost" type="button" data-open-ai>Ask AI</button>
+        <a class="btn btn-primary" href="services.html">Book a project</a>
       </div>
     </div>
   </header>
 
-  <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1600&auto=format&fit=crop')">
+  <section class="page-hero" style="background-image:linear-gradient(160deg,#f3f6ff 0%,#ffffff 100%)">
     <div class="container">
-      <h1 class="section-title">Payment</h1>
-      <p class="section-lead">Fast, secure options. Payment terms: 50% upfront, 50% on delivery.</p>
+      <h1>Secure payment</h1>
+      <p>Reserve your build slot with a deposit. You will receive confirmation and an invoice immediately. Remaining balance is due on launch.</p>
     </div>
   </section>
 
-  <section class="section">
+  <main class="section">
     <div class="container">
-      <div class="payment-box reveal" id="orderSummaryBox" style="margin-bottom:16px">
-        <h2 class="section-title">Order Summary</h2>
+      <div class="payment-box" id="orderSummaryBox">
+        <h2 class="section-title">Order summary</h2>
+        <p class="section-lead">If you checked out a plan or retainer, it appears here. You can adjust the amount before paying.</p>
         <div id="orderSummary"></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
           <span>Total</span>
-          <b id="orderTotal">₹0</b>
+          <b id="orderTotal">Rs 0</b>
         </div>
-        <div style="display:flex;gap:8px;margin-top:12px">
-          <button class="btn btn-primary" id="proceedToPay">Proceed to Pay</button>
-          <a class="btn btn-outline" href="services.html">Edit Cart</a>
+        <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap">
+          <button class="btn btn-primary" id="proceedToPay" type="button">Proceed to pay</button>
+          <a class="btn btn-outline" href="services.html">Edit cart</a>
         </div>
       </div>
-      <div class="payment-box reveal">
-        <h2 class="section-title">Pay via UPI</h2>
-        <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:16px;align-items:start">
+
+      <div class="payment-box" id="quickPay">
+        <h2 class="section-title">UPI quick pay</h2>
+        <div style="display:grid;grid-template-columns:1fr 0.95fr;gap:20px;align-items:start;">
           <div>
-            <p class="section-lead">Use UPI for fastest processing. Add a short note with your name or project.</p>
-            <p>UPI ID: <b id="upiId">9906617652@omni</b> <button class="btn btn-outline" id="copyUpi">Copy UPI ID</button></p>
-            <div class="grid" style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px">
-              <label>Amount (₹) <input type="number" id="qpAmount" min="0" step="100" placeholder="e.g., 8000" /></label>
-              <div class="quick-amounts" aria-label="Quick amounts" style="display:flex;gap:8px;flex-wrap:wrap">
-                <button type="button" class="btn btn-ghost" data-amount="8000">₹8k</button>
-                <button type="button" class="btn btn-ghost" data-amount="15000">₹15k</button>
-                <button type="button" class="btn btn-ghost" data-amount="25000">₹25k</button>
+            <p class="section-lead">Use UPI for instant confirmation. Add a note with your name, project, or invoice ID.</p>
+            <p>UPI ID: <strong id="upiId">9906617652@omni</strong> <button class="btn btn-outline" id="copyUpi" type="button">Copy UPI ID</button></p>
+            <div style="display:grid;gap:14px;margin-top:14px">
+              <label>Amount (Rs)
+                <input type="number" id="qpAmount" min="0" step="100" placeholder="Enter amount" />
+              </label>
+              <div class="quick-amounts" aria-label="Quick payment amounts">
+                <button type="button" class="btn btn-ghost" data-amount="25000">Rs 25k deposit</button>
+                <button type="button" class="btn btn-ghost" data-amount="130000">Rs 1.3L platform</button>
+                <button type="button" class="btn btn-ghost" data-amount="145000">Rs 1.45L commerce</button>
               </div>
-              <label>Note <input type="text" id="qpNote" placeholder="Your name / project" /></label>
-              <div style="display:flex;gap:8px;flex-wrap:wrap">
-                <button class="btn btn-primary" id="openUpi">Proceed in UPI App</button>
-                <button class="btn btn-outline" id="copyUpiLink">Copy UPI Link</button>
+              <label>Reference note
+                <input type="text" id="qpNote" placeholder="Your name / project / invoice" />
+              </label>
+              <div style="display:flex;gap:12px;flex-wrap:wrap">
+                <button class="btn btn-primary" id="openUpi" type="button">Open in UPI app</button>
+                <button class="btn btn-outline" id="copyUpiLink" type="button">Copy payment link</button>
               </div>
-              <p class="note" id="qpStatus" style="display:none"></p>
+              <p class="note" id="qpStatus" style="display:none" role="status" aria-live="polite"></p>
             </div>
           </div>
           <div>
-            <div id="qrWrap" style="display:none; margin-top:0;display:block">
-              <img id="upiQr" alt="UPI QR" width="220" height="220" style="border-radius:10px;border:1px solid var(--line)" />
-              <p class="note">Scan with BHIM / GPay / PhonePe / Paytm</p>
+            <div id="qrWrap" style="display:none;">
+              <img id="upiQr" alt="UPI QR code" width="220" height="220" style="border-radius:16px;border:1px solid var(--line)" />
+              <p class="note">Scan with BHIM, Google Pay, PhonePe, or Paytm.</p>
+            </div>
+            <div style="margin-top:16px;color:var(--muted);font-size:14px;line-height:1.65">
+              <p style="margin:0">Need a different amount or currency? Email <a href="mailto:bhtazim2018@gmail.com">bhtazim2018@gmail.com</a> and I will issue a custom link.</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="payment-box reveal" style="margin-top:16px">
-        <h2 class="section-title">Bank Transfer</h2>
-        <p class="section-lead">Prefer bank transfer? I’ll share account details and an invoice within minutes.</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-          <a class="btn btn-outline" href="mailto:bhtazim2018@gmail.com?subject=Request%20Bank%20Details&body=Hi%20Azzi,%20please%20share%20bank%20details%20for%20payment.">Request Bank Details</a>
-          <a class="btn btn-primary" href="mailto:bhtazim2018@gmail.com?subject=Request%20Invoice&body=Hi%20Azzi,%20please%20send%20an%20invoice%20for%20Rs%20_____.">Request Invoice</a>
+      <div class="payment-box">
+        <h2 class="section-title">Bank transfer or invoice</h2>
+        <p class="section-lead">Prefer to wire funds or require paperwork for finance? Share the invoice amount and billing information—responses arrive within the hour.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+          <a class="btn btn-outline" href="mailto:bhtazim2018@gmail.com?subject=Request%20bank%20details&body=Hi%20Azzi,%20please%20share%20bank%20details%20for%20payment.">Request bank details</a>
+          <a class="btn btn-primary" href="mailto:bhtazim2018@gmail.com?subject=Request%20invoice&body=Hi%20Azzi,%20please%20send%20an%20invoice%20for%20Rs _____.">Request invoice</a>
         </div>
+        <ul class="feature-list" style="margin-top:16px">
+          <li>GST invoices for Indian businesses</li>
+          <li>International transfers accepted via Wise or Stripe</li>
+          <li>Receipts and project kickoff confirmation emailed instantly</li>
+        </ul>
       </div>
 
-      <div style="margin-top:16px" class="reveal">
-        <a class="btn btn-ghost" href="services.html">Back to Services</a>
+      <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-ghost" href="services.html">Back to services</a>
+        <a class="btn btn-outline" href="index.html#contact">Have a question?</a>
       </div>
     </div>
-  </section>
+  </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© <span id="year"></span> Studio by Azzi. All rights reserved.</p>
+      <p>&copy; <span id="year"></span> Studio by Azzi. All rights reserved.</p>
       <div class="socials">
         <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://www.instagram.com/bhat___azim/" target="_blank" rel="noopener">Instagram</a>
+        <a href="mailto:bhtazim2018@gmail.com">Email</a>
       </div>
     </div>
   </footer>

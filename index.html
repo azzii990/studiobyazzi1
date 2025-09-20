@@ -3,183 +3,298 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Studio by Azzi - Web Development</title>
-  <meta name="description" content="Premium web development studio. Front-end and full-stack websites built fast, responsive, and conversion-focused." />
+  <title>Studio by Azzi · Product-Focused Web Studio</title>
+  <meta name="description" content="Studio by Azzi builds product-ready marketing sites, SaaS platforms, and commerce experiences with a strategy-first approach and crisp execution." />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#0b0d10" />
+  <meta name="theme-color" content="#ffffff" />
   <link rel="canonical" href="/index.html" />
   <link rel="alternate" hreflang="en" href="/index.html" />
-  <!-- Open Graph -->
   <meta property="og:site_name" content="Studio by Azzi" />
-  <meta property="og:title" content="Studio by Azzi — Web Development" />
-  <meta property="og:description" content="Premium web development studio. Front‑end and full‑stack websites built fast, responsive, and conversion‑focused." />
+  <meta property="og:title" content="Studio by Azzi · Strategy, UX, Development" />
+  <meta property="og:description" content="Strategy-first product and marketing builds. Research, UX, engineering, and launch support for ambitious brands." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="/" />
   <meta property="og:image" content="/images/og-image.jpg" />
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Studio by Azzi — Web Development" />
-  <meta name="twitter:description" content="Premium web development studio. Front‑end and full‑stack websites built fast, responsive, and conversion‑focused." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="twitter:title" content="Studio by Azzi · Strategy, UX, Development" />
+  <meta name="twitter:description" content="Strategy-first product and marketing builds. Research, UX, engineering, and launch support for ambitious brands." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="images/LOGO.png" />
- </head>
+</head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html"><img src="images/LOGO.png" alt="Studio by Azzi logo" /><span>Studio by Azzi</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
-      <nav class="main-nav">
-        <a href="index.html">Home</a>
+      <a class="brand" href="index.html">
+        <img src="images/LOGO.png" alt="Studio by Azzi logo" />
+        <span>Studio by Azzi</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="main-nav" id="siteNav">
+        <a href="index.html#home" class="active">Home</a>
+        <a href="about.html">About</a>
         <a href="services.html">Services</a>
-        <a href="services.html#pricing">Pricing</a>
-        <a href="payment.html">Payment</a>
-        <a href="index.html#contact">Contact</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
       </nav>
       <div class="header-cta">
-        <a class="btn btn-outline" href="https://wa.me/919906617652" target="_blank" rel="noopener" aria-label="WhatsApp Chat">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.52 3.48A11.93 11.93 0 0 0 12.06 0C5.54 0 .29 5.25.29 11.76c0 2.07.54 4.09 1.57 5.88L0 24l6.55-1.8a11.78 11.78 0 0 0 5.51 1.4h.01c6.52 0 11.77-5.25 11.77-11.76 0-3.14-1.22-6.09-3.32-8.29ZM12.06 21.3h-.01a9.6 9.6 0 0 1-4.9-1.34l-.35-.2-3.88 1.06 1.04-3.78-.23-.39a9.56 9.56 0 0 1-1.47-5.08c0-5.3 4.32-9.62 9.64-9.62 2.57 0 4.98 1 6.79 2.8 1.81 1.8 2.82 4.2 2.82 6.76 0 5.3-4.32 9.62-9.65 9.62Zm5.3-7.18c-.29-.15-1.7-.84-1.96-.94-.26-.1-.45-.15-.63.15-.18.29-.72.94-.89 1.14-.16.19-.33.22-.62.08-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.43-1.7-1.6-1.99-.17-.3-.02-.46.13-.61.14-.14.29-.36.44-.55.15-.19.19-.33.29-.55.1-.22.05-.41-.02-.56-.07-.15-.63-1.52-.86-2.08-.23-.56-.47-.48-.63-.49-.16-.01-.35-.01-.54-.01s-.5.07-.76.36c-.26.29-1 1-1 2.43 0 1.43 1.03 2.8 1.18 2.99.15.19 2.03 3.1 4.92 4.35.69.3 1.23.48 1.65.61.69.22 1.31.19 1.8.12.55-.08 1.7-.7 1.94-1.37.24-.67.24-1.24.17-1.37-.07-.13-.26-.21-.56-.36Z" fill="currentColor"/></svg>
-          <span>Chat</span>
-        </a>
-        <a class="btn btn-primary" href="payment.html" aria-label="Order Now">
-          <span>Order Now</span>
-        </a>
+        <button class="btn btn-ghost" type="button" data-open-ai>Ask AI</button>
+        <a class="btn btn-primary" href="services.html">Start a Project</a>
       </div>
     </div>
   </header>
 
-  <section id="home" class="hero">
-    <div class="container hero-inner">
-      <div class="hero-text">
-        <h1>Google-grade quality for ambitious brands</h1>
-        <p>Modern websites. Front-end and full-stack development — built fast, responsive, and conversion-focused.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="services.html">Explore Services</a>
-          <a class="btn btn-ghost" href="services.html#pricing">See Pricing</a>
-        </div>
+  <main>
+            <section id="home" class="hero hero-full">
+      <div class="hero-image" aria-hidden="true">
+        <img src="images/hero-image.jpg" alt="" loading="lazy" />
       </div>
-    </div>
-  </section>
-
-  <section class="section section-alt">
-    <div class="container">
-      <div class="logos" aria-label="Trusted by">
-        <span>Stella's Table</span>
-        <span>Northwind Foods</span>
-        <span>Himalayan Co.</span>
-        <span>Zen Cart</span>
-        <span>Pixel Works</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Capabilities</h2>
-      <div class="cards" style="margin-top:12px">
-        <article class="card">
-          <h3>Front-end</h3>
-          <p>Responsive, fast sites with clean UX and SEO foundations.</p>
-          <ul class="features">
-            <li>Next-gen performance & accessibility</li>
-            <li>On-page SEO & analytics</li>
-            <li>CMS-ready content structures</li>
+      <div class="hero-backdrop" aria-hidden="true"></div>
+      <div class="hero-spotlight" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="hero-kicker">
+            <span class="hero-tag">Local website experts</span>
+            <span class="hero-availability"><span class="status-dot" aria-hidden="true"></span>Serving small businesses</span>
+          </div>
+          <h1>Affordable Web Development Services for Local Businesses</h1>
+          <p class="hero-subheadline">Custom websites designed to help your business grow online. Fast, professional, and affordable solutions.</p>
+          <p class="hero-intro">Welcome to Studio by Azzi, where we create stunning, responsive websites that help local businesses thrive in the digital world. Whether you're just starting or looking to revamp your online presence, we've got you covered.</p>
+          <ul class="hero-points">
+            <li>Tailored designs that reflect your brand and connect with your community.</li>
+            <li>SEO-ready builds to help customers find you quickly.</li>
+            <li>Friendly support from strategy through launch and beyond.</li>
           </ul>
-        </article>
-        <article class="card">
-          <h3>Full-stack</h3>
-          <p>Custom APIs, dashboards, auth, and integrations that scale.</p>
-          <ul class="features">
-            <li>Secure auth & roles</li>
-            <li>Admin panels & workflows</li>
-            <li>CI/CD & cloud deploys</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-alt">
-    <div class="container">
-      <h2 class="section-title">Simple Process</h2>
-      <div class="steps" style="margin-top:12px">
-        <div class="step">
-          <h3>1. Brief</h3>
-          <p>Quick call or chat to align on goals, scope, and timeline.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Get a Free Consultation Today!</a>
+            <a class="btn btn-outline" href="#portfolio">See Our Work</a>
+            <div class="hero-response-time"><span class="status-dot" aria-hidden="true"></span>We reply within one business day</div>
+          </div>
+          <dl class="hero-metrics">
+            <div class="metric-card">
+              <dt>50+ local builds</dt>
+              <dd>Custom sites launched for service-based businesses</dd>
+            </div>
+            <div class="metric-card">
+              <dt>14-day turnaround</dt>
+              <dd>Average timeline for a new brochure website</dd>
+            </div>
+            <div class="metric-card">
+              <dt>5-star client reviews</dt>
+              <dd>Consistent praise for support and performance</dd>
+            </div>
+          </dl>
         </div>
-        <div class="step">
-          <h3>2. Build</h3>
-          <p>Iterative development with fast previews.</p>
-        </div>
-        <div class="step">
-          <h3>3. Launch</h3>
-          <p>QA, performance pass, documentation, and a smooth handoff.</p>
+        <div class="hero-floating">
+          <div class="hero-card hero-card-highlight">
+            <span class="hero-card-label">Featured project</span>
+            <p>Downtown Bakery's new website boosted online orders by 60% within three months of launch.</p>
+          </div>
+          <div class="hero-card hero-card-stats">
+            <div>
+              <span class="hero-card-metric">3x</span>
+              <span class="hero-card-meta">More inquiries</span>
+            </div>
+            <div>
+              <span class="hero-card-metric">+45%</span>
+              <span class="hero-card-meta">Organic traffic</span>
+            </div>
+          </div>
+          <div class="hero-card hero-card-quote">
+            <blockquote>
+              "They delivered a beautiful site fast and made the process incredibly easy for our team."
+            </blockquote>
+            <cite>Sarah Nguyen, Owner at Lakeside Yoga</cite>
+          </div>
         </div>
       </div>
-      <div style="margin-top:16px">
-        <a class="btn btn-primary" href="services.html">See Services</a>
-        <a class="btn btn-outline" href="payment.html">Payment Options</a>
+    </section>
+
+    <section class="section logos-strip">
+      <div class="container logos">
+        <span>Trusted by teams at</span>
+        <ul>
+          <li>Stella's Table</li>
+          <li>Northwind</li>
+          <li>ZenCart</li>
+          <li>Himalayan Co.</li>
+          <li>Pixel Works</li>
+        </ul>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="about" class="section">
-    <div class="container">
-      <h2 class="section-title">Studio by Azzi</h2>
-      <p class="section-lead">Web development crafted to elevate your business. Clean code and clear strategy to help you launch, scale, and stand out.</p>
-    </div>
-  </section>
+        <section class="section split-section" id="about">
+      <div class="container split">
+        <div class="split-copy">
+          <span class="eyebrow">Who we are</span>
+          <h2>About Studio by Azzi</h2>
+          <p>At Studio by Azzi, we are passionate about helping local businesses succeed online. With years of experience in web development, we specialize in creating beautiful, functional websites tailored to your business needs. Our goal is to make the web accessible and affordable for everyone.</p>
+          <p>We work closely with you to understand your business and design a website that attracts customers, improves your brand, and helps you stand out from the competition.</p>
+          <div class="split-cta">
+            <a class="btn btn-primary" href="services.html">Learn More About Our Services</a>
+          </div>
+        </div>
+        <div class="split-panel">
+          <div class="checklist">
+            <h3>What you can expect</h3>
+            <ul>
+              <li>Friendly, local support every step of the way</li>
+              <li>Websites that look great on any device</li>
+              <li>Transparent pricing with no hidden fees</li>
+              <li>Content and SEO guidance tailored to your market</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section id="contact" class="section section-alt">
-    <div class="container contact">
-      <div>
-        <h2 class="section-title">Let's Work Together</h2>
-        <p class="section-lead">Tell me about your project and goals. I'll reply with a tailored plan and quote.</p>
-        <ul class="contact-list">
-          <li><a href="tel:+919906617652">+91 99066 17652</a></li>
-          <li><a href="mailto:bhtazim2018@gmail.com">bhtazim2018@gmail.com</a></li>
-          <li><a href="https://wa.me/919906617652" target="_blank" rel="noopener">WhatsApp</a></li>
+        <section class="section services-overview" id="services">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Our Web Development Services</span>
+          <h2>Tailored solutions to meet your business needs</h2>
+          <p class="section-lead">From the first concept to long-term care, we provide everything local businesses need to build a strong online presence.</p>
+        </div>
+        <div class="card-grid">
+          <article class="service-card">
+            <h3>Custom Website Design</h3>
+            <p>We create unique, custom websites that reflect your brand and engage your audience. From modern designs to intuitive navigation, we make sure your site stands out.</p>
+          </article>
+          <article class="service-card">
+            <h3>E-commerce Websites</h3>
+            <p>Looking to sell online? We design user-friendly e-commerce websites that are easy to manage, secure, and optimized for sales.</p>
+          </article>
+          <article class="service-card">
+            <h3>SEO & Digital Marketing</h3>
+            <p>Not only do we build great websites, but we also help you attract more customers through search engine optimization (SEO) and digital marketing strategies.</p>
+          </article>
+          <article class="service-card">
+            <h3>Website Redesign</h3>
+            <p>If your website is outdated or not converting visitors into customers, we will refresh your site with a modern, responsive design that improves performance and user experience.</p>
+          </article>
+          <article class="service-card">
+            <h3>Website Maintenance & Support</h3>
+            <p>We offer ongoing website maintenance services to ensure your site stays up to date, secure, and running smoothly.</p>
+          </article>
+        </div>
+        <div class="services-cta">
+          <a class="btn btn-primary" href="#contact">Get Started Today</a>
+        </div>
+      </div>
+    </section>
+
+        <section class="section case-section" id="portfolio">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Our Work</span>
+          <h2>Websites built for local businesses like yours</h2>
+          <p class="section-lead">Check out some of the amazing websites we have built for local businesses. From simple brochures to complex e-commerce solutions, we have the skills and experience to bring your vision to life.</p>
+        </div>
+        <div class="case-list">
+          <article class="case-item">
+            <header>
+              <h3>Neighborhood Dental Clinic</h3>
+              <span>Custom responsive website</span>
+            </header>
+            <p>Clean, friendly design with online booking, service pages, and testimonials that build trust with new patients.</p>
+          </article>
+          <article class="case-item">
+            <header>
+              <h3>Lakeside Yoga Studio</h3>
+              <span>Class schedule + memberships</span>
+            </header>
+            <p>Modern site featuring instructor bios, membership plans, and a seamless class registration flow.</p>
+          </article>
+          <article class="case-item">
+            <header>
+              <h3>Downtown Bakery</h3>
+              <span>E-commerce storefront</span>
+            </header>
+            <p>Mobile-friendly storefront with product galleries, secure checkout, and pickup/delivery options that boosted online orders.</p>
+          </article>
+        </div>
+        <p class="portfolio-note">Add your favourite project screenshots and links here to showcase the results you deliver.</p>
+        <div class="portfolio-cta">
+          <a class="btn btn-primary" href="#contact">See How We Can Help Your Business</a>
+        </div>
+      </div>
+    </section>
+    <section class="section blog-section" id="blog">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Web Development Tips & Resources</span>
+          <h2>Stay ahead with practical advice</h2>
+          <p class="section-lead">Stay up to date with the latest web development trends, tips, and best practices. Our blog covers topics that will help you create and maintain a successful online presence.</p>
+        </div>
+        <div class="blog-grid">
+          <article class="blog-card">
+            <h3>How to plan a small business website</h3>
+            <p>Step-by-step guidance on organizing content, picking the right pages, and preparing assets before we start designing.</p>
+            <a href="blog.html" class="blog-link">Read more</a>
+          </article>
+          <article class="blog-card">
+            <h3>Boost local SEO in under 30 minutes</h3>
+            <p>Simple updates you can make this week to appear in more local searches and attract nearby customers.</p>
+            <a href="blog.html" class="blog-link">Read more</a>
+          </article>
+          <article class="blog-card">
+            <h3>What to expect during a redesign</h3>
+            <p>Learn how our redesign process works, what we handle for you, and how to get the most from your new site launch.</p>
+            <a href="blog.html" class="blog-link">Read more</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    
+
+    
+
+    
+  </main>
+
+    <section id="contact" class="section contact-cta">
+    <div class="container contact-card">
+      <div class="contact-text">
+        <span class="eyebrow">Get in touch</span>
+        <h2>Ready to take your business online?</h2>
+        <p>Ready to take your business online or upgrade your current website? Let's talk! Fill out the form below, and we'll get back to you as soon as possible.</p>
+        <ul class="contact-links">
+          <li><a href="tel:+919906617652">Call us at +91 99066 17652 for an immediate consultation.</a></li>
+          <li><a href="mailto:bhtazim2018@gmail.com">Email bhtazim2018@gmail.com</a></li>
+          <li>Visit us at Shaheen Bagh, New Delhi</li>
         </ul>
       </div>
       <form class="contact-form" action="mailto:bhtazim2018@gmail.com" method="post" enctype="text/plain">
-        <label>
-          Name
+        <label>Name
           <input type="text" name="name" required />
         </label>
-        <label>
-          Email
+        <label>Email
           <input type="email" name="email" required />
         </label>
-        <label>
-          What do you need?
-          <select name="service">
-            <option>Front-end website</option>
-            <option>Full-stack website</option>
-          </select>
+        <label>Message
+          <textarea name="message" rows="4" placeholder="Tell us about your project" required></textarea>
         </label>
-        <label>
-          Project details
-          <textarea name="details" rows="4" placeholder="Briefly describe your project, target audience, and timeline."></textarea>
-        </label>
-        <button class="btn btn-primary" type="submit">Send Inquiry</button>
+        <button class="btn btn-primary" type="submit">Submit Your Inquiry</button>
       </form>
     </div>
   </section>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© <span id="year"></span> Studio by Azzi. All rights reserved.</p>
+      <p>&copy; <span id="year"></span> Studio by Azzi. All rights reserved.</p>
       <div class="socials">
         <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://www.instagram.com/bhat___azim/" target="_blank" rel="noopener">Instagram</a>
+        <a href="mailto:bhtazim2018@gmail.com">Email</a>
       </div>
     </div>
   </footer>
 
   <script src="script.js"></script>
-  <!-- Structured Data: Organization -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -194,3 +309,25 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

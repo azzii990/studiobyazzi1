@@ -3,57 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin — Studio by Azzi</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Admin · Studio by Azzi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="images/LOGO.png" />
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="index.html"><img src="images/LOGO.png" alt="Studio by Azzi logo" /><span>Studio by Azzi</span></a>
-      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
-      <nav class="main-nav">
-        <a href="index.html">Home</a>
+      <a class="brand" href="index.html">
+        <img src="images/LOGO.png" alt="Studio by Azzi logo" />
+        <span>Studio by Azzi</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="main-nav" id="siteNav">
+        <a href="index.html#home">Home</a>
         <a href="services.html">Services</a>
         <a href="payment.html">Payment</a>
       </nav>
       <div class="header-cta">
-        <a class="btn btn-outline" href="https://wa.me/919906617652" target="_blank" rel="noopener" aria-label="WhatsApp Chat">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.52 3.48A11.93 11.93 0 0 0 12.06 0C5.54 0 .29 5.25.29 11.76c0 2.07.54 4.09 1.57 5.88L0 24l6.55-1.8a11.78 11.78 0 0 0 5.51 1.4h.01c6.52 0 11.77-5.25 11.77-11.76 0-3.14-1.22-6.09-3.32-8.29ZM12.06 21.3h-.01a9.6 9.6 0 0 1-4.9-1.34l-.35-.2-3.88 1.06 1.04-3.78-.23-.39a9.56 9.56 0 0 1-1.47-5.08c0-5.3 4.32-9.62 9.64-9.62 2.57 0 4.98 1 6.79 2.8 1.81 1.8 2.82 4.2 2.82 6.76 0 5.3-4.32 9.62-9.65 9.62Zm5.3-7.18c-.29-.15-1.7-.84-1.96-.94-.26-.1-.45-.15-.63.15-.18.29-.72.94-.89 1.14-.16.19-.33.22-.62.08-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.43-1.7-1.6-1.99-.17-.3-.02-.46.13-.61.14-.14.29-.36.44-.55.15-.19.19-.33.29-.55.1-.22.05-.41-.02-.56-.07-.15-.63-1.52-.86-2.08-.23-.56-.47-.48-.63-.49-.16-.01-.35-.01-.54-.01s-.5.07-.76.36c-.26.29-1 1-1 2.43 0 1.43 1.03 2.8 1.18 2.99.15.19 2.03 3.1 4.92 4.35.69.3 1.23.48 1.65.61.69.22 1.31.19 1.8.12.55-.08 1.7-.7 1.94-1.37.24-.67.24-1.24.17-1.37-.07-.13-.26-.21-.56-.36Z" fill="currentColor"/></svg>
-          <span>Chat</span>
-        </a>
+        <button class="btn btn-ghost" type="button" data-open-ai>Ask AI</button>
       </div>
     </div>
   </header>
 
-  <section class="section">
+  <main class="section">
     <div class="container">
-      <h1 class="section-title">Admin — Orders</h1>
-      <p class="section-lead">Enter your admin token to view and manage orders.</p>
+      <h1 class="section-title">Admin dashboard</h1>
+      <p class="section-lead">Enter your admin token to manage enquiries and chat leads captured by the site.</p>
 
-      <div class="card" style="margin:12px 0;">
-        <form id="adminAuth" class="order-form" style="grid-template-columns: 1fr auto; align-items: end;">
-          <label>
-            Admin Token
-            <input type="password" id="adminToken" placeholder="Enter ADMIN_TOKEN" />
+      <div class="card" style="margin:16px 0;">
+        <form id="adminAuth" class="order-form" style="grid-template-columns: 1fr auto; align-items: end; gap:14px;">
+          <label>Admin token
+            <input type="password" id="adminToken" placeholder="Enter ADMIN_TOKEN" required />
           </label>
-          <button class="btn btn-primary" type="submit">Save Token</button>
+          <button class="btn btn-primary" type="submit">Save token</button>
         </form>
-        <p class="note">Set ADMIN_TOKEN in <code>server/.env</code> and enter it here. Stored locally in your browser.</p>
+        <p class="note">Set <code>ADMIN_TOKEN</code> inside <code>server/.env</code>. The token is saved locally in your browser.</p>
       </div>
 
-      <div class="card" style="margin:12px 0;">
-        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-          <button class="btn btn-outline" id="refreshOrders">Refresh</button>
-          <label style="flex:1;">
-            Search
+      <div class="card" style="margin:16px 0;">
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+          <button class="btn btn-outline" id="refreshOrders">Refresh orders</button>
+          <label style="flex:1;">Search
             <input type="text" id="search" placeholder="Filter by name, email, service, status" />
           </label>
         </div>
-        <div style="overflow:auto; margin-top:10px;">
+        <div style="overflow:auto; margin-top:16px;">
           <table class="table" id="ordersTable" style="width:100%; min-width:900px;">
             <thead>
               <tr>
@@ -73,15 +71,14 @@
         </div>
       </div>
 
-      <div class="card" style="margin:12px 0;">
-        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-          <button class="btn btn-outline" id="refreshChats">Refresh Chats</button>
-          <label style="flex:1;">
-            Search Chats
+      <div class="card" style="margin:16px 0;">
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+          <button class="btn btn-outline" id="refreshChats">Refresh chats</button>
+          <label style="flex:1;">Search chats
             <input type="text" id="searchChats" placeholder="Filter by name, email, status or text" />
           </label>
         </div>
-        <div style="overflow:auto; margin-top:10px;">
+        <div style="overflow:auto; margin-top:16px;">
           <table class="table" id="chatTable" style="width:100%; min-width:900px;">
             <thead>
               <tr>
@@ -100,7 +97,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </main>
 
   <script src="admin.js"></script>
 </body>
