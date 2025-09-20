@@ -1,4 +1,4 @@
-﻿// Configure your backend base URL here (leave empty for same-origin)
+// Configure your backend base URL here (leave empty for same-origin)
 const BACKEND_BASE_URL = '';
 
 // Tabs switching
@@ -218,7 +218,7 @@ function updateUpiQR() {
   qrWrap.style.display = 'block';
 }
 
-function showQPStatus(msg) {
+      showQPStatus('Amount set to Rs ' + val.toLocaleString('en-IN'));
   if (!qpStatus) return; qpStatus.style.display = 'block'; qpStatus.textContent = msg;
 }
 
@@ -228,7 +228,7 @@ if (openUpi) {
     const link = buildUpiLink();
     // Try to open UPI app
     window.location.href = link;
-    showQPStatus('If nothing opens, copy the link and open on your phone.');
+      showQPStatus('Amount set to Rs ' + val.toLocaleString('en-IN'));
     confetti();
     updateUpiQR();
   });
@@ -239,10 +239,10 @@ if (copyUpiLink) {
     const link = buildUpiLink();
     try {
       await navigator.clipboard.writeText(link);
-      showQPStatus('Payment link copied!');
+      showQPStatus('Amount set to Rs ' + val.toLocaleString('en-IN'));
       confetti();
     } catch {
-      showQPStatus('Could not copy automatically. Select and copy: ' + link);
+      showQPStatus('Amount set to Rs ' + val.toLocaleString('en-IN'));
     }
     updateUpiQR();
   });
@@ -255,7 +255,7 @@ document.querySelectorAll('.quick-amounts [data-amount]')?.forEach(btn => {
     if (qpAmount && !Number.isNaN(val)) {
       qpAmount.value = val;
       updateUpiQR();
-      showQPStatus('Amount set to â‚¹' + val.toLocaleString('en-IN'));
+      showQPStatus('Amount set to Rs ' + val.toLocaleString('en-IN'));
     }
   });
 });
@@ -726,6 +726,7 @@ try {
     document.getElementById('openUpi')?.click();
   });
 })();
+
 
 
 

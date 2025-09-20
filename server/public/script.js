@@ -1,4 +1,4 @@
-﻿// Configure your backend base URL here (leave empty for same-origin)
+// Configure your backend base URL here (leave empty for same-origin)
 const BACKEND_BASE_URL = '';
 
 // Tabs switching
@@ -55,8 +55,12 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
 // Mobile nav toggle
 const navToggle = document.querySelector('.nav-toggle');
+const navMenu = document.querySelector('.main-nav');
+
 if (navToggle) {
-  // Add SVG hamburger and ARIA state
+  if (navMenu && !navMenu.id) navMenu.id = 'siteNav';
+  navToggle.type = 'button';
+  if (navMenu) navToggle.setAttribute('aria-controls', navMenu.id);
   navToggle.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
   navToggle.setAttribute('aria-expanded', 'false');
   navToggle.addEventListener('click', () => {
@@ -64,64 +68,72 @@ if (navToggle) {
     navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
 }
+
 document.querySelectorAll('.main-nav a').forEach(link => {
   link.addEventListener('click', () => document.body.classList.remove('nav-open'));
 });
 
 // Hero spotlight cursor effect
-(function heroSpotlight(){
+(function heroSpotlight() {
   const hero = document.querySelector('.hero');
   if (!hero) return;
-  let raf = 0, px = 0, py = 0;
+  let raf = 0;
+  let px = 50;
+  let py = 50;
+
   const set = (x, y) => {
     hero.style.setProperty('--mx', x + '%');
     hero.style.setProperty('--my', y + '%');
   };
-  const onMove = (clientX, clientY) => {
-    const r = hero.getBoundingClientRect();
-    const x = ((clientX - r.left) / r.width) * 100;
-    const y = ((clientY - r.top) / r.height) * 100;
+
+  const schedule = () => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      set(px, py);
+      raf = 0;
+    });
+  };
+
+  const moveTo = (clientX, clientY) => {
+    const rect = hero.getBoundingClientRect();
+    const x = ((clientX - rect.left) / rect.width) * 100;
+    const y = ((clientY - rect.top) / rect.height) * 100;
     px = Math.max(0, Math.min(100, x));
     py = Math.max(0, Math.min(100, y));
-    if (!raf) raf = requestAnimationFrame(() => { set(px, py); raf = 0; });
+    schedule();
   };
-  hero.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
-  hero.addEventListener('mouseleave', () => set(50, 50));
-  hero.addEventListener('touchstart', (e) => {
-    const t = e.touches[0]; if (t) onMove(t.clientX, t.clientY);
+
+  const activate = () => hero.classList.add('spotlight-active');
+  const deactivate = () => {
+    hero.classList.remove('spotlight-active');
+    px = 50;
+    py = 50;
+    schedule();
+  };
+
+  hero.addEventListener('mouseenter', activate);
+  hero.addEventListener('mousemove', (event) => {
+    activate();
+    moveTo(event.clientX, event.clientY);
+  });
+  hero.addEventListener('mouseleave', deactivate);
+  hero.addEventListener('touchstart', (event) => {
+    const touch = event.touches[0];
+    if (!touch) return;
+    activate();
+    moveTo(touch.clientX, touch.clientY);
   }, { passive: true });
-  hero.addEventListener('touchmove', (e) => {
-    const t = e.touches[0]; if (t) onMove(t.clientX, t.clientY);
+  hero.addEventListener('touchmove', (event) => {
+    const touch = event.touches[0];
+    if (touch) moveTo(touch.clientX, touch.clientY);
   }, { passive: true });
+  hero.addEventListener('touchend', deactivate);
+  hero.addEventListener('touchcancel', deactivate);
+
+  set(px, py);
 })();
 
 // Typography/copy cleanup for corrupted characters
-(function cleanCopy(){
-  const replacements = new Map([
-    ['Frontï¿½?`end', 'Frontâ€‘end'],
-    ['Fullï¿½?`stack', 'Fullâ€‘stack'],
-    ['Backï¿½?`end', 'Backâ€‘end'],
-    ['Eï¿½?`commerce', 'Eâ€‘commerce'],
-    ['SEOï¿½?`ready', 'SEOâ€‘ready'],
-    ['ï¿½?"', 'â€”'],
-    ['Ac ', 'Â© '],
-    ['ï¿½?ï¿½', 'â€¦'],
-    ['ï¿½~ï¿½', 'â˜°'],
-    ['ï¿½,1', 'â‚¹']
-  ]);
-  const walker = document.createTreeWalker(document, NodeFilter.SHOW_TEXT);
-  const nodes = [];
-  while (walker.nextNode()) nodes.push(walker.currentNode);
-  for (const n of nodes) {
-    let t = n.nodeValue;
-    let changed = false;
-    replacements.forEach((to, from) => {
-      if (t.includes(from)) { t = t.split(from).join(to); changed = true; }
-    });
-    if (changed) n.nodeValue = t;
-  }
-})();
-
 // Reveal on scroll
 const revealEls = document.querySelectorAll('.reveal');
 if (revealEls.length) {
@@ -206,7 +218,7 @@ function updateUpiQR() {
   qrWrap.style.display = 'block';
 }
 
-function showQPStatus(msg) {
+      showQPStatus('Amount set to Rs ' + val.toLocaleString('en-IN'));
   if (!qpStatus) return; qpStatus.style.display = 'block'; qpStatus.textContent = msg;
 }
 
@@ -216,7 +228,7 @@ if (openUpi) {
     const link = buildUpiLink();
     // Try to open UPI app
     window.location.href = link;
-    showQPStatus('If nothing opens, copy the link and open on your phone.');
+      showQPStatus('Amount set to Rs ' + val.toLocaleString('en-IN'));
     confetti();
     updateUpiQR();
   });
@@ -227,10 +239,10 @@ if (copyUpiLink) {
     const link = buildUpiLink();
     try {
       await navigator.clipboard.writeText(link);
-      showQPStatus('Payment link copied!');
+      showQPStatus('Amount set to Rs ' + val.toLocaleString('en-IN'));
       confetti();
     } catch {
-      showQPStatus('Could not copy automatically. Select and copy: ' + link);
+      showQPStatus('Amount set to Rs ' + val.toLocaleString('en-IN'));
     }
     updateUpiQR();
   });
@@ -243,7 +255,7 @@ document.querySelectorAll('.quick-amounts [data-amount]')?.forEach(btn => {
     if (qpAmount && !Number.isNaN(val)) {
       qpAmount.value = val;
       updateUpiQR();
-      showQPStatus('Amount set to â‚¹' + val.toLocaleString('en-IN'));
+      showQPStatus('Amount set to Rs ' + val.toLocaleString('en-IN'));
     }
   });
 });
@@ -265,87 +277,110 @@ if (tipsToggle && tipsContent) {
 
 // Floating chat widget (simple lead chat)
 (function initChat(){
-  // Avoid duplicate on admin where another script could run
   if (document.querySelector('.chat-launcher')) return;
   const launcher = document.createElement('button');
   launcher.className = 'chat-launcher';
+  launcher.type = 'button';
   launcher.title = 'Ask AI';
-  launcher.textContent = 'ðŸ’¬';
+  launcher.setAttribute('aria-haspopup', 'dialog');
+  launcher.setAttribute('aria-expanded', 'false');
+  launcher.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12c0 4.418-4.03 8-9 8-1.03 0-2.015-.15-2.93-.427L3 21l1.53-4.59C3.56 15.14 3 13.62 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const win = document.createElement('div');
   win.className = 'chat-window';
+  win.setAttribute('role', 'dialog');
+  win.setAttribute('aria-modal', 'false');
+  win.setAttribute('aria-label', 'AI assistant chat');
   win.innerHTML = `
     <div class="chat-header">
-      <h3>AI Assistant</h3>
-      <button class="btn btn-outline" data-close-chat title="Close">Ã—</button>
+      <h3 id="chatTitle">AI Assistant</h3>
+      <button type="button" class="btn btn-outline" data-close-chat aria-label="Close chat">&times;</button>
     </div>
-    <div class="chat-body" id="chatBody">
-      <div class="chat-msg bot">Hi! Tell me your name, email and what you need. I reply fast.</div>
-    </div>
-    <form class="chat-form" id="chatForm">
-      <input type="text" id="chatInput" placeholder="Type your message..." required />
+    <div class="chat-body" id="chatBody" aria-live="polite" aria-atomic="false"></div>
+    <form class="chat-form" id="chatForm" aria-labelledby="chatTitle">
+      <input type="text" id="chatInput" placeholder="Type your message..." autocomplete="off" required />
       <button type="submit" class="btn btn-primary">Send</button>
     </form>`;
   document.body.appendChild(launcher);
   document.body.appendChild(win);
-
-  // Normalize first bot message (avoid weird quotes)
-  const firstBot = win.querySelector('.chat-msg.bot');
-  if (firstBot) firstBot.textContent = "Hi! I'm Azzi's AI assistant. Ask anything about services, pricing, timelines, or tech.";
-
-  // Replace launcher text with SVG icon for a cleaner look
-  launcher.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 12c0 4.418-4.03 8-9 8-1.03 0-2.015-.15-2.93-.427L3 21l1.53-4.59C3.56 15.14 3 13.62 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  // Ensure close button shows a proper symbol
-  const closeBtnFix = win.querySelector('[data-close-chat]');
-  if (closeBtnFix) closeBtnFix.textContent = 'Ã—';
-
   const chatBody = win.querySelector('#chatBody');
   const chatForm = win.querySelector('#chatForm');
   const chatInput = win.querySelector('#chatInput');
   const closeBtn = win.querySelector('[data-close-chat]');
-
-  function open(){ win.classList.add('open'); chatInput.focus(); }
-  function close(){ win.classList.remove('open'); }
-  // Expose a global opener for header buttons
+  const initialMessage = "Hi! I'm Azzi's AI assistant. Ask anything about services, pricing, timelines, or tech.";
+  const scrollToLatest = () => { chatBody.scrollTop = chatBody.scrollHeight; };
+  const pushUser = (text) => {
+    const node = document.createElement('div');
+    node.className = 'chat-msg user';
+    node.textContent = text;
+    chatBody.appendChild(node);
+    scrollToLatest();
+  };
+  const pushBot = (text) => {
+    const node = document.createElement('div');
+    node.className = 'chat-msg bot';
+    node.textContent = text;
+    chatBody.appendChild(node);
+    scrollToLatest();
+    return node;
+  };
+  pushBot(initialMessage);
+  const open = () => {
+    win.classList.add('open');
+    launcher.setAttribute('aria-expanded', 'true');
+    chatInput.focus();
+  };
+  const close = () => {
+    win.classList.remove('open');
+    launcher.setAttribute('aria-expanded', 'false');
+  };
   window.openAIChat = open;
   launcher.addEventListener('click', () => {
     if (win.classList.contains('open')) close(); else open();
   });
-  closeBtn.addEventListener('click', close);
-
-  function pushUser(text){
-    const d = document.createElement('div'); d.className = 'chat-msg user'; d.textContent = text; chatBody.appendChild(d); chatBody.scrollTop = chatBody.scrollHeight;
-  }
-  function pushBot(text){
-    const d = document.createElement('div'); d.className = 'chat-msg bot'; d.textContent = text; chatBody.appendChild(d); chatBody.scrollTop = chatBody.scrollHeight;
-  }
-
+  document.addEventListener('click', (event) => {
+    if (!win.classList.contains('open')) return;
+    if (event.target === launcher || launcher.contains(event.target)) return;
+    if (win.contains(event.target)) return;
+    close();
+  });
+  closeBtn?.addEventListener('click', close);
+  win.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      event.stopPropagation();
+      close();
+      launcher.focus();
+    }
+  });
   const aiHistory = [];
-  chatForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const text = chatInput.value.trim(); if (!text) return;
-    pushUser(text); chatInput.value='';
+  chatForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const text = chatInput.value.trim();
+    if (!text) return;
+    pushUser(text);
+    chatInput.value = '';
+    const typing = pushBot('AI is thinking...');
+    typing.classList.add('typing');
     try {
-      // Send to AI
-      const typing = document.createElement('div'); typing.className = 'chat-msg bot'; typing.textContent = 'â€¦'; chatBody.appendChild(typing); chatBody.scrollTop = chatBody.scrollHeight;
-      typing.textContent = '...';
       const aiRes = await fetch(`${BACKEND_BASE_URL}/api/ai-chat`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, history: aiHistory })
       });
-      const aiData = await aiRes.json();
+      const aiData = await aiRes.json().catch(() => ({ reply: '' }));
       typing.remove();
-      const botReply = aiData.reply || 'Thanks!';
-      pushBot(botReply);
+      if (!aiRes.ok || !aiData.reply) {
+        pushBot('Thanks for reaching out! WhatsApp me at +91 99066 17652 and I\'ll reply right away.');
+        return;
+      }
+      pushBot(aiData.reply);
       aiHistory.push({ role: 'user', content: text });
-      aiHistory.push({ role: 'assistant', content: botReply });
-
-      // AI-only mode: no background lead logging
-    } catch (err) {
-      pushBot("I'm here, but something went wrong sending your message. You can WhatsApp me: +91 99066 17652");
+      aiHistory.push({ role: 'assistant', content: aiData.reply });
+    } catch (error) {
+      typing.remove();
+      pushBot('I\'m here, but something went wrong sending your message. You can WhatsApp me at +91 99066 17652.');
     }
   });
 })();
-
 // Header "Ask AI" buttons
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-open-ai]');
@@ -362,7 +397,7 @@ const orderServiceName = document.getElementById('orderServiceName');
 const orderServiceKey = document.getElementById('orderServiceKey');
 
 // Redirect to payment with plan details instead of opening modal
-const PLAN_AMOUNTS = { basic: 8000, standard: 15000, premium: 25000, maintenance: 2000, seo: 3000, updates: 1500, revisions: 1000 };
+const PLAN_AMOUNTS = { basic: 8999, standard: 16999, premium: 29999, maintenance: 2000, seo: 3000, updates: 1500, revisions: 1000 };
 document.querySelectorAll('.order-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -373,7 +408,7 @@ document.querySelectorAll('.order-btn').forEach(btn => {
     if (key) params.set('plan', key);
     if (amt) params.set('amount', String(amt));
     if (title) params.set('title', title);
-    const base = (location.pathname.endsWith('/services.html') || location.pathname.includes('/services.html')) ? '/payment.html' : '/payment.html';
+    const base = (location.pathname.endsWith('/services.html') || location.pathname.includes('/services.html')) ? 'payment.html' : '/payment.html';
     location.href = base + '?' + params.toString();
   });
 });
@@ -410,7 +445,7 @@ if (orderForm) {
   });
 }
 
-// Prefill payment page from URL query (plan, amount, title, note)
+// Prefill payment page from URL query (plan, amount, title)
 try {
   const qp = new URLSearchParams(location.search);
   const urlAmt = parseFloat(qp.get('amount') || '');
@@ -435,110 +470,209 @@ try {
 
 // --- Simple cart (localStorage) ---
 (function cartInit(){
-  const PLAN_AMOUNTS = { basic: 8000, standard: 15000, premium: 25000 };
+  const PLAN_AMOUNTS = { basic: 8999, standard: 16999, premium: 29999 };
   const CART_KEY = 'sba_cart';
-  const getCart = () => { try { return JSON.parse(localStorage.getItem(CART_KEY)||'[]'); } catch { return []; } };
-  const setCart = (c) => { localStorage.setItem(CART_KEY, JSON.stringify(c)); updateCartCount(); renderCartList(); };
+
+  const getCart = () => {
+    try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); }
+    catch { return []; }
+  };
+
+  const getItemCount = (cart) => cart.reduce((sum, item) => sum + (item && item.qty ? Number(item.qty) : 1), 0);
+
+  let drawer;
+  let itemsEl;
+  let emptyEl;
+  let totalEl;
+  let checkoutLink;
+  let clearBtn;
+
   const updateCartCount = () => {
-    const el = document.getElementById('cartCount');
-    if (el) el.textContent = String(getCart().length);
+    const el = document.querySelector('[data-cart-count]') || document.getElementById('cartCount');
+    if (el) el.textContent = String(getItemCount(getCart()));
+  };
+
+  const renderCartList = () => {
+    if (!itemsEl || !totalEl || !emptyEl || !checkoutLink || !clearBtn) return;
+    const cart = getCart();
+    itemsEl.innerHTML = '';
+    if (!cart.length) {
+      emptyEl.style.display = 'block';
+      totalEl.textContent = 'Rs 0';
+      checkoutLink.classList.add('disabled');
+      clearBtn.disabled = true;
+      updateCartCount();
+      return;
+    }
+    emptyEl.style.display = 'none';
+    checkoutLink.classList.remove('disabled');
+    clearBtn.disabled = false;
+    let total = 0;
+    cart.forEach((item, index) => {
+      const qty = item && item.qty ? Number(item.qty) : 1;
+      const price = item && item.price ? Number(item.price) : 0;
+      const lineTotal = price * qty;
+      total += lineTotal;
+      const li = document.createElement('li');
+      li.className = 'cart-item';
+      li.innerHTML = `
+        <div class="cart-item__info">
+          <span class="cart-item__title">${item.title}</span>
+          <span class="cart-item__meta">Rs ${price.toLocaleString('en-IN')} x ${qty}</span>
+        </div>
+        <div class="cart-item__actions">
+          <span class="cart-item__amount">Rs ${lineTotal.toLocaleString('en-IN')}</span>
+          <button type="button" class="cart-remove" data-remove-item="${index}">Remove</button>
+        </div>`;
+      itemsEl.appendChild(li);
+    });
+    totalEl.textContent = 'Rs ' + total.toLocaleString('en-IN');
+    updateCartCount();
+  };
+
+  const setCart = (items) => {
+    localStorage.setItem(CART_KEY, JSON.stringify(items));
+    updateCartCount();
+    renderCartList();
+  };
+
+  const ensureQuantity = (value) => {
+    const qty = Number(value);
+    if (!Number.isFinite(qty) || qty <= 0) return 1;
+    return Math.floor(qty);
   };
 
   const injectCartBtn = () => {
     const hdr = document.querySelector('.header-cta');
     if (!hdr || hdr.querySelector('[data-open-cart]')) return;
-    const a = document.createElement('a');
-    a.href = '#'; a.className = 'btn btn-outline'; a.setAttribute('data-open-cart',''); a.setAttribute('aria-label','Cart');
-    a.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6h.01M6 6l1.2 9.6a2 2 0 0 0 2 1.8h6.9a2 2 0 0 0 1.98-1.7l1.3-7.7H7.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.6" fill="currentColor"/><circle cx="18" cy="20" r="1.6" fill="currentColor"/></svg> <span id="cartCount">0</span>';
-    hdr.appendChild(a);
+    const btn = document.createElement('a');
+    btn.href = '#';
+    btn.className = 'btn btn-outline cart-header-btn';
+    btn.setAttribute('data-open-cart', '');
+    btn.setAttribute('aria-label', 'Open cart');
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6h.01M6 6l1.2 9.6a2 2 0 0 0 2 1.8h6.9a2 2 0 0 0 1.98-1.7l1.3-7.7H7.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.6" fill="currentColor"/><circle cx="18" cy="20" r="1.6" fill="currentColor"/></svg><span class="cart-count" data-cart-count>0</span>';
+    hdr.appendChild(btn);
     updateCartCount();
   };
 
-  let drawer; let listEl; let totalEl;
+  const closeCart = () => {
+    if (!drawer) return;
+    drawer.classList.remove('open');
+    document.body.classList.remove('cart-open');
+  };
+
   const ensureDrawer = () => {
     if (drawer) return drawer;
-    const style = document.createElement('style');
-    style.textContent = `
-    .cart-drawer{position:fixed;inset:0;z-index:200;display:none}
-    .cart-drawer.open{display:block}
-    .cart-drawer__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5)}
-    .cart-drawer__panel{position:absolute;right:0;top:0;bottom:0;width:min(420px,92%);background:#141922;border-left:1px solid #1e2733;color:#e8eef5;display:flex;flex-direction:column}
-    .cart-drawer__header{padding:12px 14px;border-bottom:1px solid #1e2733;display:flex;justify-content:space-between;align-items:center}
-    .cart-drawer__body{padding:10px;overflow:auto;flex:1}
-    .cart-drawer__footer{padding:12px 14px;border-top:1px solid #1e2733}
-    .cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px 6px;border-bottom:1px dashed #1e2733}
-    .cart-item b{font-weight:600}
-    .cart-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
-    `;
-    document.head.appendChild(style);
     drawer = document.createElement('div');
-    drawer.className = 'cart-drawer';
+    drawer.className = 'cart-container';
     drawer.innerHTML = `
-      <div class="cart-drawer__backdrop" data-close-cart></div>
-      <div class="cart-drawer__panel">
-        <div class="cart-drawer__header"><b>Your Cart</b><button class="btn btn-outline" data-close-cart>Close</button></div>
-        <div class="cart-drawer__body"><div id="cartItems"></div></div>
-        <div class="cart-drawer__footer">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <span>Total</span>
-            <b id="cartTotal">₹0</b>
-          </div>
-          <div class="cart-actions">
-            <button class="btn btn-outline" id="cartClear">Clear</button>
-            <button class="btn btn-primary" id="cartCheckout">Checkout</button>
-          </div>
+      <div class="cart-overlay" data-close-cart></div>
+      <aside class="cart-panel" role="dialog" aria-label="Selected plans">
+        <header class="cart-panel__header">
+          <h3>Selected Plans</h3>
+          <button type="button" class="cart-close" data-close-cart aria-label="Close cart">&times;</button>
+        </header>
+        <div class="cart-panel__body">
+          <ul class="cart-items" data-cart-items></ul>
+          <p class="cart-empty" data-cart-empty>No plans added yet.</p>
         </div>
-      </div>`;
+        <footer class="cart-panel__footer">
+          <div class="cart-total">
+            <span>Total</span>
+            <strong data-cart-total>Rs 0</strong>
+          </div>
+          <a class="btn btn-primary cart-checkout" data-cart-checkout href="payment.html">Proceed to Payment</a>
+          <button type="button" class="btn btn-ghost cart-clear" data-cart-clear>Clear Cart</button>
+        </footer>
+      </aside>`;
     document.body.appendChild(drawer);
-    listEl = drawer.querySelector('#cartItems');
-    totalEl = drawer.querySelector('#cartTotal');
-    drawer.addEventListener('click', (e) => {
-      if (e.target.closest('[data-close-cart]')) drawer.classList.remove('open');
+    itemsEl = drawer.querySelector('[data-cart-items]');
+    emptyEl = drawer.querySelector('[data-cart-empty]');
+    totalEl = drawer.querySelector('[data-cart-total]');
+    checkoutLink = drawer.querySelector('[data-cart-checkout]');
+    clearBtn = drawer.querySelector('[data-cart-clear]');
+
+    drawer.addEventListener('click', (event) => {
+      if (event.target.closest('[data-close-cart]')) {
+        event.preventDefault();
+        closeCart();
+      }
     });
-    drawer.querySelector('#cartClear').addEventListener('click', () => { setCart([]); });
-    drawer.querySelector('#cartCheckout').addEventListener('click', () => {
+
+    clearBtn.addEventListener('click', () => setCart([]));
+
+    checkoutLink.addEventListener('click', (event) => {
       const cart = getCart();
-      if (!cart.length) return;
-      const total = cart.reduce((s,i)=> s + (i.price||0), 0);
-      const note = cart.map(i=> `${i.title} (₹${i.price})`).join(' | ');
-      const params = new URLSearchParams({ amount: String(total), note, title: 'Cart' });
-      location.href = '/payment.html?' + params.toString();
+      if (!cart.length) {
+        event.preventDefault();
+        return;
+      }
+      const total = cart.reduce((sum, item) => sum + (item && item.price ? Number(item.price) : 0) * (item && item.qty ? Number(item.qty) : 1), 0);
+      const note = cart.map(item => `${item.title} (Rs ${item.price}) x ${item.qty || 1}`).join(' | ');
+      const params = new URLSearchParams({ amount: String(total), title: 'Cart', note });
+      checkoutLink.href = 'payment.html?' + params.toString();
     });
+
+    renderCartList();
     return drawer;
   };
 
-  const renderCartList = () => {
+  const openCart = () => {
     ensureDrawer();
-    const cart = getCart();
-    listEl.innerHTML = '';
-    let total = 0;
-    cart.forEach((it, idx) => {
-      total += it.price || 0;
-      const row = document.createElement('div');
-      row.className = 'cart-item';
-      row.innerHTML = `<div><b>${it.title}</b><div style="color:#b3c0d4;font-size:12px">₹${(it.price||0).toLocaleString('en-IN')}</div></div><button class="btn btn-outline" data-remove-item="${idx}">Remove</button>`;
-      listEl.appendChild(row);
-    });
-    totalEl.textContent = '₹' + total.toLocaleString('en-IN');
-    updateCartCount();
+    renderCartList();
+    drawer.classList.add('open');
+    document.body.classList.add('cart-open');
   };
 
-  document.addEventListener('click', (e) => {
-    const openBtn = e.target.closest('[data-open-cart]');
-    const removeBtn = e.target.closest('[data-remove-item]');
-    if (openBtn) { e.preventDefault(); ensureDrawer(); renderCartList(); drawer.classList.add('open'); }
-    if (removeBtn) { const idx = Number(removeBtn.getAttribute('data-remove-item')); const cart = getCart(); cart.splice(idx,1); setCart(cart); renderCartList(); }
+  document.addEventListener('click', (event) => {
+    const openBtn = event.target.closest('[data-open-cart]');
+    if (openBtn) {
+      event.preventDefault();
+      openCart();
+      return;
+    }
+    const removeBtn = event.target.closest('[data-remove-item]');
+    if (removeBtn) {
+      const index = Number(removeBtn.getAttribute('data-remove-item'));
+      if (!Number.isNaN(index)) {
+        const cart = getCart();
+        cart.splice(index, 1);
+        setCart(cart);
+      }
+    }
   });
 
-  document.querySelectorAll('.add-to-cart').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const key = btn.dataset.service || '';
-      const title = btn.dataset.serviceTitle || 'Selected Service';
-      const price = PLAN_AMOUNTS[key] || 0;
-      const item = { key, title, price };
-      const cart = getCart(); cart.push(item); setCart(cart);
-      ensureDrawer(); renderCartList(); drawer.classList.add('open');
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeCart();
+  });
+
+  document.querySelectorAll('.add-to-cart').forEach((btn) => {
+    btn.addEventListener('click', (event) => {
+      event.preventDefault();
+      const key = btn.dataset.planId || btn.dataset.service || '';
+      const title = btn.dataset.planName || btn.dataset.serviceTitle || btn.getAttribute('data-title') || btn.textContent.trim() || 'Selected Service';
+      const price = parseFloat(btn.dataset.planPrice || '') || PLAN_AMOUNTS[key] || 0;
+      if (!key || !price) {
+        openCart();
+        return;
+      }
+      const cart = getCart();
+      const existing = cart.find(item => item.key === key);
+      if (existing) {
+        existing.qty = ensureQuantity((existing.qty || 1) + 1);
+      } else {
+        cart.push({ key, title, price, qty: 1 });
+      }
+      setCart(cart);
+      const originalText = btn.dataset.originalText || btn.textContent.trim();
+      btn.dataset.originalText = originalText;
+      btn.classList.add('added');
+      btn.textContent = 'Added!';
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.classList.remove('added');
+      }, 1500);
+      openCart();
     });
   });
 
@@ -554,30 +688,53 @@ try {
   const totalEl = document.getElementById('orderTotal');
   const proceed = document.getElementById('proceedToPay');
   const CART_KEY = 'sba_cart';
-  const cart = (() => { try { return JSON.parse(localStorage.getItem(CART_KEY)||'[]'); } catch { return []; } })();
-  const items = cart.length ? cart : (() => {
-    const qp = new URLSearchParams(location.search);
-    const key = qp.get('plan')||''; const title = qp.get('title')||'Selected Service';
-    const price = parseFloat(qp.get('amount')||'') || 0;
-    return key || price ? [{ key, title, price }] : [];
+  const storedCart = (() => {
+    try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); }
+    catch { return []; }
+  })();
+  const qp = new URLSearchParams(location.search);
+  const items = storedCart.length ? storedCart : (() => {
+    const key = qp.get('plan') || '';
+    const title = qp.get('title') || 'Selected Service';
+    const price = parseFloat(qp.get('amount') || '') || 0;
+    if (!key && !price) return [];
+    return [{ key, title, price, qty: 1 }];
   })();
   let total = 0;
   listHost.innerHTML = '';
-  items.forEach(it => {
-    total += it.price||0;
-    const row = document.createElement('div');
-    row.className = 'cart-item';
-    row.innerHTML = `<div><b>${it.title}</b><div style="color:#b3c0d4;font-size:12px">₹${(it.price||0).toLocaleString('en-IN')}</div></div>`;
-    listHost.appendChild(row);
-  });
-  totalEl.textContent = '₹' + total.toLocaleString('en-IN');
-  // Keep UPI fields in sync
-  const qa = document.getElementById('qpAmount');
-  const qn = document.getElementById('qpNote');
-  if (qa) qa.value = total || qa.value;
-  if (qn && items.length) qn.value = items.map(i=> `${i.title} (₹${i.price})`).join(' | ');
-  document.getElementById('proceedToPay')?.addEventListener('click', (e) => {
-    e.preventDefault(); document.getElementById('openUpi')?.click();
+  if (!items.length) {
+    listHost.innerHTML = '<p class="cart-empty">No plans selected yet.</p>';
+  } else {
+    items.forEach(item => {
+      const qty = item.qty ? Number(item.qty) : 1;
+      const price = item.price || 0;
+      const lineTotal = price * qty;
+      total += lineTotal;
+      const row = document.createElement('div');
+      row.className = 'cart-item';
+      row.innerHTML = `<div><b>${item.title}</b><div style="color:#b3c0d4;font-size:12px">Rs ${price.toLocaleString('en-IN')} x ${qty}</div></div><div><strong>Rs ${lineTotal.toLocaleString('en-IN')}</strong></div>`;
+      listHost.appendChild(row);
+    });
+  }
+  totalEl.textContent = 'Rs ' + total.toLocaleString('en-IN');
+  if (typeof qpAmount !== 'undefined' && qpAmount) qpAmount.value = total || qpAmount.value;
+  if (typeof qpNote !== 'undefined' && qpNote && items.length) {
+    qpNote.value = items.map(item => `${item.title} (Rs ${item.price}) x ${item.qty || 1}`).join(' | ');
+  }
+  proceed?.addEventListener('click', (event) => {
+    event.preventDefault();
+    document.getElementById('openUpi')?.click();
   });
 })();
+
+
+
+
+
+
+
+
+
+
+
 

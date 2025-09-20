@@ -61,9 +61,9 @@ app.get('/api/health', (_req, res) => {
 
 // Services catalog (edit as needed)
 const services = [
-  { key: 'basic', title: 'Basic Plan', startingPrice: 8000, currency: 'INR', description: 'Single landing page (front-end). Responsive UI, SEO basics, analytics hookup.' },
-  { key: 'standard', title: 'Standard Plan', startingPrice: 15000, currency: 'INR', description: 'Multi-page site (front-end). Up to 5 pages, navigation, SEO meta, sitemap.' },
-  { key: 'premium', title: 'Premium Plan', startingPrice: 25000, currency: 'INR', description: 'Full-stack e-commerce with auth, catalog, cart, checkout, and admin.' },
+  { key: 'basic', title: 'Basic Plan', startingPrice: 8999, currency: 'INR', description: 'Single landing page (front-end). Responsive UI, SEO basics, analytics hookup.' },
+  { key: 'standard', title: 'Standard Plan', startingPrice: 16999, currency: 'INR', description: 'Multi-page site (front-end). Up to 5 pages, navigation, SEO meta, sitemap.' },
+  { key: 'premium', title: 'Premium Plan', startingPrice: 29999, currency: 'INR', description: 'Full-stack e-commerce with auth, catalog, cart, checkout, and admin.' },
   // Add-ons / monthly services
   { key: 'maintenance', title: 'Website Maintenance (Monthly)', startingPrice: 2000, currency: 'INR', description: 'Core/plugin updates, uptime checks, backups, minor fixes, priority support.' },
   { key: 'seo', title: 'SEO Monthly', startingPrice: 3000, currency: 'INR', description: 'On-page improvements, keywords, performance tuning, monthly report.' },
@@ -396,6 +396,7 @@ app.listen(PORT, () => {
 function cleanWebRuleBasedReply(user, services) {
   return webRuleBasedReply(user, services);
 }
+
 
 
 
