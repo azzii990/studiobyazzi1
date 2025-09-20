@@ -1,4 +1,4 @@
-// Configure your backend base URL here (leave empty for same-origin)
+﻿// Configure your backend base URL here (leave empty for same-origin)
 const BACKEND_BASE_URL = '';
 
 // Tabs switching
@@ -255,7 +255,7 @@ document.querySelectorAll('.quick-amounts [data-amount]')?.forEach(btn => {
     if (qpAmount && !Number.isNaN(val)) {
       qpAmount.value = val;
       updateUpiQR();
-      showQPStatus('Amount set to ₹' + val.toLocaleString('en-IN'));
+      showQPStatus('Amount set to â‚¹' + val.toLocaleString('en-IN'));
     }
   });
 });
@@ -726,6 +726,7 @@ try {
     document.getElementById('openUpi')?.click();
   });
 })();
+
 
 
 
